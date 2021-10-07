@@ -59,10 +59,6 @@ class _MyHomePageState extends State<MyHomePage> {
     redirectUri: Uri.parse("tol://localhost"),
   );
 
-  void sayHello() {
-    print("Hello");
-  }
-
   void _connectToReddit() async {
     final authUrl = red.auth.url(["*"], "Appdev", compactLogin: true);
     final result = await FlutterWebAuth.authenticate(
