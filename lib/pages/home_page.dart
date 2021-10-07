@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../reddit_draw.dart';
+import '../main.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -9,10 +11,15 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: const Text("Home"),
+        title: const Text('Home'),
       ),
-      body: const Center(
-        child: Text('Home', style: TextStyle(fontSize: 60)),
+      body: Center(
+        child: Column(children: const <Widget>[
+          TextButton(
+            onPressed: RedditInfo.SayHi,
+             child: const Text('Home')),
+        ],
+        )
       ),
     );
   }

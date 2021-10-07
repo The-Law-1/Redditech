@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:async';
-import 'package:draw/draw.dart';
-import 'package:flutter_web_auth/flutter_web_auth.dart';
 import 'package:redditech/pages/home_page.dart';
 import 'package:redditech/pages/profile_page.dart';
+
+//https://www.youtube.com/watch?v=xoKqQjSDZ60&ab_channel=JohannesMilke
 
 void main() {
   runApp(const MyApp());
@@ -35,70 +34,24 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  String queryResult = "";
   int currentIndex = 0;
+  String queryResult = "";
 
   final screens = [
-    HomePage(),
+    const HomePage(),
     Center(child: Text('Messages', style: TextStyle(fontSize: 60))),
     Center(child: Text('Settings', style: TextStyle(fontSize: 60))),
-    ProfilePage(),
+    const ProfilePage(),
   ];
-
-  var red = Reddit.createInstalledFlowInstance(
-    clientId: "MMGIkAwcebtbAJ4IOEGV4A",
-    userAgent: "Appdev",
-    redirectUri: Uri.parse("tol://localhost"),
-  );
-
-  void _connectToReddit() async {
-    final authUrl = red.auth.url(["*"], "Appdev", compactLogin: true);
-    final result = await FlutterWebAuth.authenticate(
-        url: authUrl.toString(), callbackUrlScheme: "tol");
-
-    String? code = Uri.parse(result).queryParameters['code']; // pourquoi 'code'
-
-    await red.auth.authorize(code.toString());
-
-    Redditor? me = await red.user.me();
-
-    setState(() {
-      if (me != null) {
-        print(me);
-        queryResult = me.displayName;
-      }
-      // remplacer counter par une string et afficher ce dernier
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
     // by the _incrementCounter method above.
     return Scaffold(
-        appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(widget.title),
-        ),
-        body: Center(
-          // Center is a layout widget. It takes a single child and positions it
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                queryResult,
-                style: Theme.of(context).textTheme.headline4,
-              ),
-              ElevatedButton(
-                onPressed: () {
-                  _connectToReddit();
-                },
-                child: const Text('Connect to Reddit'),
-              ),
-              screens[currentIndex],
-            ],
-          ),
+        body: IndexedStack(
+          index: currentIndex,
+          children: screens,
         ),
         bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
