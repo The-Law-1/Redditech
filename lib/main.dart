@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:draw/draw.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
+import 'package:redditech/pages/home_page.dart';
+import 'package:redditech/pages/profile_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -36,11 +38,11 @@ class _MyHomePageState extends State<MyHomePage> {
   String queryResult = "";
   int currentIndex = 0;
 
-  final screens = const [
-    Center(child: Text('Home', style: TextStyle(fontSize: 60))),
+  final screens = [
+    HomePage(),
     Center(child: Text('Messages', style: TextStyle(fontSize: 60))),
     Center(child: Text('Settings', style: TextStyle(fontSize: 60))),
-    Center(child: Text('Profile', style: TextStyle(fontSize: 60)))
+    ProfilePage(),
   ];
 
   var red = Reddit.createInstalledFlowInstance(
