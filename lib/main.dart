@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:draw/draw.dart';
+import 'package:flutter_web_auth/flutter_web_auth.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,7 +25,7 @@ class MyApp extends StatelessWidget {
         // or simply save your changes to "hot reload" in a Flutter IDE).
         // Notice that the counter didn't reset back to zero; the application
         // is not restarted.
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -48,16 +51,35 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  String queryResult = "";
 
-  void _incrementCounter() {
+  var red = Reddit.createInstalledFlowInstance(
+    clientId: "MMGIkAwcebtbAJ4IOEGV4A",
+    userAgent: "Appdev",
+    redirectUri: Uri.parse("tol://localhost"),
+  );
+
+  void sayHello() {
+    print("Hello");
+  }
+
+  void _connectToReddit() async {
+    final authUrl = red.auth.url(["*"], "Appdev", compactLogin: true);
+    final result = await FlutterWebAuth.authenticate(
+        url: authUrl.toString(), callbackUrlScheme: "tol");
+
+    String? code = Uri.parse(result).queryParameters['code']; // pourquoi 'code'
+
+    await red.auth.authorize(code.toString());
+
+    Redditor? me = await red.user.me();
+
     setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
+      if (me != null) {
+        print(me);
+        queryResult = me.displayName;
+      }
+      // remplacer counter par une string et afficher ce dernier
     });
   }
 
@@ -95,21 +117,19 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
             Text(
-              '$_counter',
+              queryResult,
               style: Theme.of(context).textTheme.headline4,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _connectToReddit();
+              },
+              child: const Text('Connect to Reddit'),
             ),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }
