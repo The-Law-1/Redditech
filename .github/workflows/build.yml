@@ -20,10 +20,10 @@ jobs:
         uses: subosito/flutter-action@v1
         with:
           flutter-version: '2.5.2'
+      - run: flutter pub get
+      - run: flutter build apk
 
       - uses: actions/checkout@v2
-      - name: compile
-        run: flutter build apk
       - name: create artifact
         run: mkdir artifact && cp build/app/outputs/flutter-apk/app-release.apk artifact
       - name: upload artifact
