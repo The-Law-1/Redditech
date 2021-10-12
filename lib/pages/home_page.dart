@@ -3,7 +3,7 @@ import '../reddit_draw.dart';
 import '../main.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 
-class HomePage extends StatelessWidget with RedditInfo {
+class HomePage extends StatelessWidget/* with RedditInfo*/ {
   HomePage({Key? key}) : super(key: key);
 
   @override
@@ -17,10 +17,10 @@ class HomePage extends StatelessWidget with RedditInfo {
       body: Center(
           child: Column(
         children: <Widget>[
-          OutlinedButton(onPressed: sayHi, child: const Text('SayHi')),
+          const OutlinedButton(onPressed: RedditInfo.sayHi, child: Text('SayHi')),
           OutlinedButton(
               onPressed: () async {
-                connection();
+                RedditInfo.connection();
               },
               child: const Text('Connect'))
         ],

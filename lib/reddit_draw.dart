@@ -2,20 +2,20 @@ import 'dart:async';
 import 'package:draw/draw.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 
-abstract class RedditInfo {
+class RedditInfo {
   //factory RedditInfo_() => null;
 
-  var red = Reddit.createInstalledFlowInstance(
+  static var red = Reddit.createInstalledFlowInstance(
     clientId: "MMGIkAwcebtbAJ4IOEGV4A",
     userAgent: "Appdev",
     redirectUri: Uri.parse("tol://localhost"),
   );
 
-  void sayHi() {
+  static void sayHi() {
     print("Hi");
   }
 
-  Future<String> _connectToReddit(red) async {
+  static Future<String> _connectToReddit(red) async {
     final authUrl = red.auth.url(["*"], "Appdev", compactLogin: true);
     final result = await FlutterWebAuth.authenticate(
         url: authUrl.toString(), callbackUrlScheme: "tol");
@@ -30,7 +30,7 @@ abstract class RedditInfo {
     //return (red);
   }
 
-  void connection() async {
+  static void connection() async {
     try {
       await red.user.me();
       //print("Before connection " + (await red.user.me()).toString());
@@ -38,7 +38,6 @@ abstract class RedditInfo {
     } catch (e) {
       print("Client not connected: " + e.toString());
 
-      // vérifier si red est déja authentifié
       await _connectToReddit(red);
       print("After connection " + (await red.user.me()).toString());
     }
