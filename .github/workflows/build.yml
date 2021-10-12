@@ -11,6 +11,7 @@ jobs:
       image: epitechcontent/epitest-docker:latest
     steps:
 
+      - uses: actions/checkout@v2
       - name: Setup Java
         uses: actions/setup-java@v1
         with:
@@ -23,7 +24,6 @@ jobs:
       - run: flutter pub get
       - run: flutter build apk
 
-      - uses: actions/checkout@v2
       - name: create artifact
         run: mkdir artifact && cp build/app/outputs/flutter-apk/app-release.apk artifact
       - name: upload artifact
