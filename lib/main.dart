@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String queryResult = "";
 
   final screens = [
-    const HomePage(),
+    HomePage(),
     Center(child: Text('Messages', style: TextStyle(fontSize: 60))),
     Center(child: Text('Settings', style: TextStyle(fontSize: 60))),
     const ProfilePage(),

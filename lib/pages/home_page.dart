@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import '../reddit_draw.dart';
 import '../main.dart';
+import 'package:flutter_web_auth/flutter_web_auth.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget with RedditInfo {
+  HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,13 +15,16 @@ class HomePage extends StatelessWidget {
         title: const Text('Home'),
       ),
       body: Center(
-        child: Column(children: const <Widget>[
-          TextButton(
-            onPressed: RedditInfo.SayHi,
-             child: const Text('Home')),
+          child: Column(
+        children: <Widget>[
+          OutlinedButton(onPressed: sayHi, child: const Text('SayHi')),
+          OutlinedButton(
+              onPressed: () async {
+                connection();
+              },
+              child: const Text('Connect'))
         ],
-        )
-      ),
+      )),
     );
   }
 }
