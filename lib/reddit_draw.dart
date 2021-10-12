@@ -15,7 +15,7 @@ abstract class RedditInfo {
     print("Hi");
   }
 
-  void _connectToReddit(red) async {
+  Future<String> _connectToReddit(red) async {
     final authUrl = red.auth.url(["*"], "Appdev", compactLogin: true);
     final result = await FlutterWebAuth.authenticate(
         url: authUrl.toString(), callbackUrlScheme: "tol");
@@ -26,12 +26,21 @@ abstract class RedditInfo {
 
     //Redditor? me = await red.user.me();
 
+    return (red.toString());
     //return (red);
   }
 
   void connection() async {
+    try {
+      await red.user.me();
+      //print("Before connection " + (await red.user.me()).toString());
+      print("Client connected");
+    } catch (e) {
+      print("Client not connected: " + e.toString());
 
-    // vérifier si red est déja authentifié
-    _connectToReddit(red);
+      // vérifier si red est déja authentifié
+      await _connectToReddit(red);
+      print("After connection " + (await red.user.me()).toString());
+    }
   }
 }
