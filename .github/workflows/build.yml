@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install flutter
-        run: sudo apt install -y flutter && sudo flutter pub get
+        run: sudo apt-get update -y && sudo apt-get install -y flutter && sudo flutter pub get
       - name: compile
         run: flutter build apk
       - name: create artifact
