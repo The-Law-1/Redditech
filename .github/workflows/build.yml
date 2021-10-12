@@ -10,9 +10,18 @@ jobs:
     container:
       image: epitechcontent/epitest-docker:latest
     steps:
+
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.5.2'
+
       - uses: actions/checkout@v2
-      - name: Install flutter
-        run: sudo dnf install -y flutter && flutter pub get
       - name: compile
         run: flutter build apk
       - name: create artifact
