@@ -1,0 +1,24 @@
+name: build
+
+on:
+  push:
+    branches:
+      - "*"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: epitechcontent/epitest-docker:latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install flutter
+        run: sudo apt install -y flutter && sudo flutter pub get
+      - name: compile
+        run: flutter build apk
+      - name: create artifact
+        run: mkdir artifact && cp build/app/outputs/flutter-apk/app-release.apk artifact
+      - name: upload artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: android-build
+          path: artifact
