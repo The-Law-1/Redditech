@@ -2,6 +2,19 @@ import 'dart:async';
 import 'package:draw/draw.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 
+// repository (design pattern)
+// model user
+// home, profile, subreddits, etC...
+// controller fills out models
+
+// COLOR THEME
+// home without login
+// github projects
+// documentation
+// CI
+// functional/controller tests
+// research block architecture
+
 class RedditInfo {
   //factory RedditInfo_() => null;
 
