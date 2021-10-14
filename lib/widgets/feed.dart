@@ -1,7 +1,7 @@
 import 'package:draw/draw.dart';
 import 'package:flutter/material.dart';
 
-Widget _postAuthorRow(Image pictureImage, String title) {
+Widget subredditRow(Image pictureImage, String title) {
   const double profPicDiameter = 44;
 
   return Container(
@@ -33,11 +33,24 @@ Widget _postAuthorRow(Image pictureImage, String title) {
 Widget buildSubredditsFeedContainer(Image profileImage, String title) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
-    children: [_postAuthorRow(profileImage, title)],
+    children: [subredditRow(profileImage, title)],
   );
 }
 
-// widget for post feed container
+// poly-morphic for content ?
+Widget buildPostFeedContainer(
+    Image profileImage, String author, String postHeader) {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      subredditRow(profileImage, author),
+      // post header
+      Text(postHeader,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32)),
+      // content
+    ],
+  );
+}
 
 // tmp function returning a list of subreddit feed items
 List<Widget> createSubredditsFeed() {
@@ -80,3 +93,13 @@ List<Widget> createSubredditsFeed() {
         "Subreddit 10"),
   ]);
 }
+
+// popular | best | hot | new
+// List<Widget> createPostsFeed(String option) {
+//   return ([
+//     buildPostFeedContainer(
+//         Image.network(
+//             'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80'),
+//         "Post 1 " + option)
+//   ]);
+// }

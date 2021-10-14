@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Redditech',
       theme: ThemeData(
         primarySwatch: Colors.red,
       ),
@@ -40,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final screens = [
     HomePage(),
-    const Center(child: Text('Messages', style: TextStyle(fontSize: 60))),
+    const Center(child: Text('Browse', style: TextStyle(fontSize: 60))),
     const SettingsPage(),
     const ProfilePage(),
   ];
@@ -54,9 +54,11 @@ class _MyHomePageState extends State<MyHomePage> {
           index: currentIndex,
           children: screens,
         ),
+        // todo transformer en widget ceci
+
         bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
-            backgroundColor: Colors.blue,
+            backgroundColor: Colors.red,
             selectedItemColor: Colors.white,
             unselectedItemColor: Colors.white70,
             iconSize: 40,
@@ -72,8 +74,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   label: 'Home',
                   backgroundColor: Colors.blue),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.message),
-                  label: 'Messages',
+                  icon: Icon(Icons.search),
+                  label: 'Browse',
                   backgroundColor: Colors.red),
               BottomNavigationBarItem(
                   icon: Icon(Icons.settings),

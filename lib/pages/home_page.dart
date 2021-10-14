@@ -15,16 +15,10 @@ class HomePage extends StatelessWidget/* with RedditInfo*/ {
         title: const Text('Home'),
       ),
       body: Center(
-          child: Column(
-        children: <Widget>[
-          const OutlinedButton(onPressed: RedditInfo.sayHi, child: Text('SayHi')),
-          OutlinedButton(
-              onPressed: () async {
-                RedditInfo.connection();
-              },
-              child: const Text('Connect'))
-        ],
-      )),
+        // tabs for HOT/BEST/NEW
+        // list view of posts
+
+      )
     );
   }
 }
