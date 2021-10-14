@@ -1,6 +1,7 @@
 import 'package:draw/draw.dart';
 import 'package:flutter/material.dart';
 import '../widgets/feed.dart';
+import 'package:redditech/globals_variables.dart';
 
 // ! https://www.youtube.com/watch?v=X95-2wES1II&ab_channel=JohannesMilke
 
@@ -22,11 +23,16 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< Updated upstream
     profileElements = [];
     profileElements.addAll([buildUpperZone(), buildProfileInfo()]);
     profileElements.addAll(createSubredditsFeed());
 
+=======
+    setState(() {});
+>>>>>>> Stashed changes
     return (Scaffold(
+        backgroundColor: globalApparenceBool ? Colors.white : Colors.black,
         body: ListView(
       padding: EdgeInsets.zero,
       children: profileElements,
