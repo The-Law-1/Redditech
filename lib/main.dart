@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:redditech/pages/home_page.dart';
 import 'package:redditech/pages/profile_page.dart';
+import 'package:redditech/pages/settings_page.dart';
 
 //https://www.youtube.com/watch?v=xoKqQjSDZ60&ab_channel=JohannesMilke
 
@@ -40,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final screens = [
     HomePage(),
     Center(child: Text('Messages', style: TextStyle(fontSize: 60))),
-    Center(child: Text('Settings', style: TextStyle(fontSize: 60))),
+    const SettingsPage(),
     ProfilePage(),
   ];
 
