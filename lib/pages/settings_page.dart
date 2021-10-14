@@ -26,7 +26,7 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             buildButtonZone(
                 child: buildApparenceSwitch(),
-                text: one ? "One" : "Off"),
+                text: one ? "On" : "Off"),
             buildButtonZone(
                 child: buildSoundSwitch(),
                 text: soundValue ? "Sound On" : "Sound Off"),

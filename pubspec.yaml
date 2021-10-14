@@ -37,6 +37,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   draw: ^1.0.2
   flutter_web_auth: ^0.3.1
+  material_floating_search_bar: ^0.3.4
 
 dev_dependencies:
   flutter_test:

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:redditech/pages/home_page.dart';
 import 'package:redditech/pages/profile_page.dart';
+import 'package:redditech/pages/searching_page.dart';
 import 'package:redditech/pages/settings_page.dart';
 
 //https://www.youtube.com/watch?v=xoKqQjSDZ60&ab_channel=JohannesMilke
@@ -40,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final screens = [
     HomePage(),
-    const Center(child: Text('Browse', style: TextStyle(fontSize: 60))),
+    const SearchingPage(),
     const SettingsPage(),
     const ProfilePage(),
   ];
