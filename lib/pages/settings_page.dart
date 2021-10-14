@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:redditech/globals_variables.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -9,6 +8,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  bool one = true;
   bool soundValue = true;
   bool three = true;
   bool four = true;
@@ -18,7 +18,6 @@ class _SettingsPageState extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     return (Scaffold(
-        backgroundColor: globalApparenceBool ? Colors.white : Colors.black,
         body: Center(
             child: Column(
           children: [
@@ -27,28 +26,22 @@ class _SettingsPageState extends State<SettingsPage> {
             ),
             buildButtonZone(
                 child: buildApparenceSwitch(),
-                text: globalApparenceBool ? "Light Mode" : "Dark Mode",
-                textColor: globalApparenceBool ? Colors.black : Colors.white),
+                text: one ? "One" : "Off"),
             buildButtonZone(
                 child: buildSoundSwitch(),
-                text: soundValue ? "Sound On" : "Sound Off",
-                textColor: globalApparenceBool ? Colors.black : Colors.white),
+                text: soundValue ? "Sound On" : "Sound Off"),
             buildButtonZone(
                 child: build3Switch(),
-                text: three ? "On" : "Off",
-                textColor: globalApparenceBool ? Colors.black : Colors.white),
+                text: three ? "On" : "Off"),
             buildButtonZone(
                 child: build4Switch(),
-                text: four ? "On" : "Off",
-                textColor: globalApparenceBool ? Colors.black : Colors.white),
+                text: four ? "On" : "Off"),
             buildButtonZone(
                 child: build5Switch(),
-                text: five ? "On" : "Off",
-                textColor: globalApparenceBool ? Colors.black : Colors.white),
+                text: five ? "On" : "Off"),
             buildButtonZone(
                 child: build6Switch(),
-                text: six ? "On" : "Off",
-                textColor: globalApparenceBool ? Colors.black : Colors.white),
+                text: six ? "On" : "Off"),
           ],
         ))));
   }
@@ -69,12 +62,12 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget buildApparenceSwitch() => Transform.scale(
         scale: 2,
         child: Switch.adaptive(
-          activeColor: Colors.yellow[100],
+          activeColor: Colors.yellow,
           activeTrackColor: Colors.yellow.withOpacity(0.3),
-          inactiveThumbColor: Colors.grey[900],
+          inactiveThumbColor: Colors.grey[400],
           inactiveTrackColor: Colors.grey.withOpacity(0.4),
-          value: globalApparenceBool,
-          onChanged: (value) => setState(() => globalApparenceBool = value),
+          value: one,
+          onChanged: (value) => setState(() => one = value),
         ),
       );
 
@@ -137,15 +130,14 @@ class _SettingsPageState extends State<SettingsPage> {
 
   Widget buildButtonZone(
           {required Widget child,
-          required String text,
-          required Color textColor}) =>
+          required String text}) =>
       Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
             text,
-            style: TextStyle(
-                fontSize: 24, fontWeight: FontWeight.bold, color: textColor),
+            style: const TextStyle(
+                fontSize: 24, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           child,

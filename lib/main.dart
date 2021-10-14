@@ -67,7 +67,9 @@ class _MyHomePageState extends State<MyHomePage> {
             //showSelectedLabels: false,
             showUnselectedLabels: false,
             currentIndex: currentIndex,
-            onTap: (index) => setState(() => currentIndex = index),
+            onTap: (index) {
+              setState(() => currentIndex = index);
+            },
             items: const [
               BottomNavigationBarItem(
                   icon: Icon(Icons.home),

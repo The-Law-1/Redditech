@@ -1,7 +1,6 @@
 import 'package:draw/draw.dart';
 import 'package:flutter/material.dart';
 import '../widgets/feed.dart';
-import 'package:redditech/globals_variables.dart';
 
 // ! https://www.youtube.com/watch?v=X95-2wES1II&ab_channel=JohannesMilke
 
@@ -20,7 +19,6 @@ class _ProfilePageState extends State<ProfilePage> {
   final String userBio = "John Smith's bio";
 
   List<Widget> profileElements = [];
-
   @override
   Widget build(BuildContext context) {
     profileElements = [];
@@ -28,11 +26,10 @@ class _ProfilePageState extends State<ProfilePage> {
     profileElements.addAll(createSubredditsFeed());
 
     return (Scaffold(
-        backgroundColor: globalApparenceBool ? Colors.white : Colors.black,
         body: ListView(
-      padding: EdgeInsets.zero,
-      children: profileElements,
-    )));
+          padding: EdgeInsets.zero,
+          children: profileElements,
+        )));
   }
 
   Widget buildProfileInfo() => Column(
