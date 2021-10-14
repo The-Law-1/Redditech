@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
     HomePage(),
     Center(child: Text('Messages', style: TextStyle(fontSize: 60))),
     Center(child: Text('Settings', style: TextStyle(fontSize: 60))),
-    const ProfilePage(),
+    ProfilePage(),
   ];
 
   @override

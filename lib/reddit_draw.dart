@@ -13,7 +13,7 @@ import 'package:flutter_web_auth/flutter_web_auth.dart';
 // documentation
 // CI
 // functional/controller tests
-// research block architecture
+// research block architectureP
 
 class RedditInfo {
   //factory RedditInfo_() => null;
