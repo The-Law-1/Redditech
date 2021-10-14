@@ -1,4 +1,6 @@
+import 'package:draw/draw.dart';
 import 'package:flutter/material.dart';
+import '../widgets/feed.dart';
 
 // ! https://www.youtube.com/watch?v=X95-2wES1II&ab_channel=JohannesMilke
 
@@ -16,12 +18,18 @@ class _ProfilePageState extends State<ProfilePage> {
   final String userName = "John Smith";
   final String userBio = "John Smith's bio";
 
+  List<Widget> profileElements = [];
+
   @override
   Widget build(BuildContext context) {
+    profileElements = [];
+    profileElements.addAll([buildUpperZone(), buildProfileInfo()]);
+    profileElements.addAll(createSubredditsFeed());
+
     return (Scaffold(
         body: ListView(
       padding: EdgeInsets.zero,
-      children: <Widget>[buildUpperZone(), buildProfileInfo()],
+      children: profileElements,
     )));
   }
 
