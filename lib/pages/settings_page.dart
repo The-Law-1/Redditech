@@ -19,7 +19,7 @@ class _SettingsPageState extends State<SettingsPage> {
         const SizedBox(
           height: 200,
         ),
-        buildSwitch()
+        buildHeader(child: buildSwitch(), text: 'Dark Mode'),
       ],
     ))));
   }
@@ -33,5 +33,21 @@ class _SettingsPageState extends State<SettingsPage> {
           value: value,
           onChanged: (value) => setState(() => this.value = value),
         ),
+      );
+
+  Widget buildHeader({
+    required Widget child,
+    required String text,
+  }) =>
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Text(
+            text,
+            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          const SizedBox(height: 8),
+          child,
+        ],
       );
 }
