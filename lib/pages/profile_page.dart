@@ -23,14 +23,10 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
-<<<<<<< Updated upstream
     profileElements = [];
     profileElements.addAll([buildUpperZone(), buildProfileInfo()]);
     profileElements.addAll(createSubredditsFeed());
 
-=======
-    setState(() {});
->>>>>>> Stashed changes
     return (Scaffold(
         backgroundColor: globalApparenceBool ? Colors.white : Colors.black,
         body: ListView(
