@@ -1,0 +1,33 @@
+name: build
+
+on:
+  push:
+    branches:
+      - "*"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # container:
+    #   image: ubuntu:latest
+    steps:
+
+      - uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.5.2'
+      - run: flutter pub get
+      - run: flutter build apk
+
+      - name: create artifact
+        run: mkdir artifact && cp build/app/outputs/flutter-apk/app-release.apk artifact
+      - name: upload artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: android-build
+          path: artifact
