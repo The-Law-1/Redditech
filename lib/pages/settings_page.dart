@@ -4,29 +4,34 @@ class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Settings'),
-      ),
-      body: const Center(
-        child: Text('Settings', style: TextStyle(fontSize: 60)),
-      ),
-    );
-  }
+  _SettingsPageState createState() => _SettingsPageState();
 }
 
-class _MySettingsPageState extends State<SettingsPage> {
+class _SettingsPageState extends State<SettingsPage> {
   bool value = true;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return (Scaffold(
+        body: Center(
+            child: Column(
+      children: [
+        const SizedBox(
+          height: 200,
+        ),
+        buildSwitch()
+      ],
+    ))));
   }
 
-  Widget buildSwitch() => Switch.adaptive(
-    value: value,
-    onChanged: (value) => setState(() => this.value = value),
-  );
+  Widget buildSwitch() => Transform.scale(
+        scale: 2,
+        child: Switch.adaptive(
+          activeColor: Colors.green[600],
+          activeTrackColor: Colors.black.withOpacity(0.4),
+          inactiveThumbColor: Colors.redAccent,
+          value: value,
+          onChanged: (value) => setState(() => this.value = value),
+        ),
+      );
 }

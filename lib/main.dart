@@ -41,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   final screens = [
     HomePage(),
     Center(child: Text('Messages', style: TextStyle(fontSize: 60))),
-    const SettingsPage(),
+    SettingsPage(),
     ProfilePage(),
   ];
 
