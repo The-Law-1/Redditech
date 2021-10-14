@@ -40,9 +40,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   final screens = [
     HomePage(),
-    Center(child: Text('Messages', style: TextStyle(fontSize: 60))),
-    SettingsPage(),
-    ProfilePage(),
+    const Center(child: Text('Messages', style: TextStyle(fontSize: 60))),
+    const SettingsPage(),
+    const ProfilePage(),
   ];
 
   @override
