@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../reddit_draw.dart';
 import '../main.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
+import '../widgets/feed.dart';
 
 class HomePage extends StatelessWidget /* with RedditInfo*/ {
   HomePage({Key? key}) : super(key: key);
@@ -17,6 +18,10 @@ class HomePage extends StatelessWidget /* with RedditInfo*/ {
       body: Center(
         // tabs for HOT/BEST/NEW
         // list view of posts
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: createPostsFeed("Hot")
+        ),
 
       )
     );
