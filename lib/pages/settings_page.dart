@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -33,12 +34,29 @@ class _SettingsPageState extends State<SettingsPage> {
       separatorBuilder: (BuildContext context, int index) => const Divider(),
       itemCount: settingsConditions.length,
       itemBuilder: (BuildContext context, int index) {
-        return Card(
-            child: ListTile(
-          leading: Icon(settingsIcon[index], size: 40),
-          title: Text(settingsString[index], style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0)),
-          trailing: buildSwitchButton(Colors.green, Colors.red, index),
-        ));
+        return Container(
+          height: 100,
+          child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              margin: const EdgeInsets.all(5),
+              shadowColor: Colors.blueGrey,
+              elevation: 5,
+              child: Center(
+                child: ListTile(
+                  leading: Icon(settingsIcon[index],
+                      size: 40,
+                      color:
+                          settingsConditions[index] ? Colors.green : Colors.grey),
+                  title: Text(settingsString[index],
+                      style: DefaultTextStyle.of(context)
+                          .style
+                          .apply(fontSizeFactor: 2.0)),
+                  trailing: buildSwitchButton(Colors.green, Colors.grey, index),
+                ),
+              )),
+        );
       },
     )));
   }
