@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../reddit_draw.dart';
+import '../controller/reddit_draw.dart';
 import '../main.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
 import '../widgets/feed.dart';

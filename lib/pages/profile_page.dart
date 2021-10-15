@@ -12,6 +12,9 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+
+  // new instance of class profileModel
+
   final double coverHeight = 280; // banner height
   final double profileHeight = 144; // profile pic height
 
