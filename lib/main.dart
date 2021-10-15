@@ -4,6 +4,7 @@ import 'package:redditech/pages/post_page.dart';
 import 'package:redditech/pages/profile_page.dart';
 import 'package:redditech/pages/searching_page.dart';
 import 'package:redditech/pages/settings_page.dart';
+import 'package:redditech/pages/subreddit_page.dart';
 
 //https://www.youtube.com/watch?v=xoKqQjSDZ60&ab_channel=JohannesMilke
 
@@ -41,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String queryResult = "";
 
   final screens = [
-    const HomePage(), //PostPage(),
+    const HomePage(), //SubredditPage(), //PostPage(),
     const SearchingPage(),
     const SettingsPage(),
     const ProfilePage(),
