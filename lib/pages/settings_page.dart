@@ -35,8 +35,8 @@ class _SettingsPageState extends State<SettingsPage> {
       itemBuilder: (BuildContext context, int index) {
         return Card(
             child: ListTile(
-          leading: Icon(settingsIcon[index]),
-          title: Text(settingsString[index]),
+          leading: Icon(settingsIcon[index], size: 40),
+          title: Text(settingsString[index], style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0)),
           trailing: buildSwitchButton(Colors.green, Colors.red, index),
         ));
       },
@@ -45,7 +45,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   //don't work because the val variable don't change when setState
   Widget buildSwitchButton(colorOn, colorOff, val) => Transform.scale(
-      scale: 1,
+      scale: 1.5,
       child: Switch.adaptive(
           activeColor: colorOn,
           activeTrackColor: colorOn.withOpacity(0.4),
