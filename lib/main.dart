@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:redditech/pages/home_page.dart';
+import 'package:redditech/pages/post_page.dart';
 import 'package:redditech/pages/profile_page.dart';
 import 'package:redditech/pages/searching_page.dart';
 import 'package:redditech/pages/settings_page.dart';
@@ -40,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   String queryResult = "";
 
   final screens = [
-    HomePage(),
+    const HomePage(), //PostPage(),
     const SearchingPage(),
     const SettingsPage(),
     const ProfilePage(),
