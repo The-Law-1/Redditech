@@ -46,7 +46,7 @@ class PostFeed {
       var postData = actualPosts[i]["data"];
 
       try {
-        print(postData["preview"].toString());
+        print(postData["preview"]["images"][0]["source"]["url"].toString());
       } catch (e) {
         print("No preview");
       }
