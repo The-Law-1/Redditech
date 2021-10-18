@@ -51,9 +51,7 @@ class RedditInfo {
       return (true);
     } catch (e) {
       print("Client not connected: " + e.toString());
-
       await _connectToReddit(red);
-      print("After connection " + (await red.user.me()).toString());
       return (false);
     }
   }

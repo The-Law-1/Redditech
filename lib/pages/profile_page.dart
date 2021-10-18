@@ -2,6 +2,7 @@ import 'package:draw/draw.dart';
 import 'package:flutter/material.dart';
 import '../widgets/feed.dart';
 import '../controller/reddit_draw.dart';
+import '../model/profile_model.dart';
 
 // ! https://www.youtube.com/watch?v=X95-2wES1II&ab_channel=JohannesMilke
 
@@ -18,21 +19,30 @@ class _ProfilePageState extends State<ProfilePage> {
   final double coverHeight = 280; // banner height
   final double profileHeight = 144; // profile pic height
 
-  final String userName = "John Smith";
-  final String userBio = "John Smith's bio";
   List<Widget> profileElements = [];
+  ProfileModel profileModel = ProfileModel();
 
   bool connected = false;
+  bool infoSet = false;
 
-  void SetProfilePage() {
+  void SetProfilePage() async {
     profileElements = [];
     if (connected) {
-      print("Welcome back " + userName);
-      // remove the loginBtn from the profileElements
-      // add the appropriate widgets
-      profileElements = [];
-      profileElements.addAll([buildUpperZone(), buildProfileInfo()]);
-      profileElements.addAll(createSubredditsFeed());
+      if (infoSet == false) {
+        await profileModel.setInfo();
+        print("Welcome back " + profileModel.userName);
+        // remove the loginBtn from the profileElements
+        // add the appropriate widgets
+        setState(() {
+          infoSet = true;
+        });
+      }
+      setState(() {
+        profileElements = [];
+        profileElements.addAll(
+            [buildUpperZone(profileModel), buildProfileInfo(profileModel)]);
+        profileElements.addAll(createSubredditsFeed());
+      });
     } else {
       print("Connect yo self");
       profileElements.add(connectButton());
@@ -63,22 +73,22 @@ class _ProfilePageState extends State<ProfilePage> {
         child: const Text('Connect'));
   }
 
-  Widget buildProfileInfo() => Column(
+  Widget buildProfileInfo(ProfileModel profile) => Column(
         children: [
           const SizedBox(height: 8),
           Text(
-            userName,
+            profile.userName,
             style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
           ),
           const SizedBox(height: 8),
           Text(
-            userBio,
+            profile.description,
             style: const TextStyle(fontSize: 20, color: Colors.black),
           )
         ],
       );
 
-  Widget buildUpperZone() {
+  Widget buildUpperZone(ProfileModel profile) {
     final bottomOffset = profileHeight / 2; // offset for text
 
     final topOffset = coverHeight -
@@ -94,16 +104,16 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         Positioned(
           top: topOffset,
-          child: buildProfileImage(),
+          child: buildProfileImage(profile),
         )
       ],
     );
   }
 
-  Widget buildProfileImage() => CircleAvatar(
+  Widget buildProfileImage(ProfileModel profile) => CircleAvatar(
         radius: profileHeight / 2,
         backgroundColor: Colors.grey.shade800,
-        backgroundImage: const NetworkImage(
+        backgroundImage: NetworkImage(/*profile.profilePicUrl)*/
             'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=880&q=80'),
       );
 
