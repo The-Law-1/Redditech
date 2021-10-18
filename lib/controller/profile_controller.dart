@@ -1,4 +1,6 @@
 // class ProfileController
+import 'dart:convert';
+
 import 'package:draw/draw.dart';
 import 'package:redditech/controller/reddit_draw.dart';
 

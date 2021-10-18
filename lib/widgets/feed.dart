@@ -122,6 +122,7 @@ List<Widget> createSubredditsFeed() {
 
 // popular | best | hot | new
 List<Widget> createPostsFeed(String option) {
+
   return ([
     buildTextPostFeedContainer(
         Image.network(

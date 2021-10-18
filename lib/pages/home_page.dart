@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:redditech/model/post_model.dart';
 import '../controller/reddit_draw.dart';
 import '../main.dart';
 import 'package:flutter_web_auth/flutter_web_auth.dart';
@@ -15,12 +16,13 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> /* with RedditInfo*/ {
-  List<Widget> postsFeed = createPostsFeed("Hot");
-  String dropdownValue = "Hot";
+  List<Widget> postsFeed = createPostsFeed("hot");
+  String currentPref = "hot";
+
+  PostFeed postFeed = PostFeed();
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -41,54 +43,28 @@ class _HomePageState extends State<HomePage> /* with RedditInfo*/ {
 
   //https://pub.dev/packages/fab_circular_menu
   Widget filterCircularMenu() => FabCircularMenu(
-      fabOpenIcon: const Icon(Icons.filter_list),
-      children: <Widget>[
-          IconButton(
-              icon: const Icon(Icons.fireplace),
-              onPressed: () => setState(() {
-                  postsFeed = createPostsFeed("Hot");
-              })
-          ),
-          IconButton(
-              icon: const Icon(Icons.favorite),
-              onPressed: () => setState(() {
-                  postsFeed = createPostsFeed("Best");
-              })
-          ),
-          IconButton(
-              icon: const Icon(Icons.flash_on),
-              onPressed: () => setState(() {
-                  postsFeed = createPostsFeed("New");
-              })
-          ),
-        ]
-      );
-
-  // Widget filtersDropDown() => DropdownButton<String>(
-  //     value: dropdownValue,
-  //     icon: const Icon(Icons.arrow_downward),
-  //     iconSize: 24,
-  //     elevation: 16,
-  //     style: const TextStyle(color: Colors.deepPurple),
-  //     underline: Container(
-  //       height: 2,
-  //       color: Colors.deepPurpleAccent,
-  //     ),
-  //     onChanged: (String? newValue) {
-  //       setState(() {
-  //         dropdownValue = newValue!;
-
-  //         print(dropdownValue);
-  //         // homeElements.add(widget);
-  //         // postsFeed = createPostsFeed(dropdownValue);
-  //         // homeElements.addAll(postsFeed);
-  //       });
-  //     },
-  //     items: <String>['Hot', 'Best', 'New', 'Popular']
-  //         .map<DropdownMenuItem<String>>((String value) {
-  //       return DropdownMenuItem<String>(
-  //         value: value,
-  //         child: Text(value),
-  //       );
-  //     }).toList());
+          fabOpenIcon: const Icon(Icons.filter_list),
+          children: <Widget>[
+            IconButton(
+                icon: const Icon(Icons.fireplace),
+                onPressed: () => setState(() {
+                      currentPref = "hot";
+                      postsFeed = createPostsFeed("hot");
+                      postFeed.setInfo(currentPref);
+                    })),
+            IconButton(
+                icon: const Icon(Icons.favorite),
+                onPressed: () => setState(() {
+                      currentPref = "best";
+                      postsFeed = createPostsFeed("best");
+                      postFeed.setInfo(currentPref);
+                    })),
+            IconButton(
+                icon: const Icon(Icons.flash_on),
+                onPressed: () => setState(() {
+                      currentPref = "new";
+                      postsFeed = createPostsFeed("new");
+                      postFeed.setInfo(currentPref);
+                    })),
+          ]);
 }
