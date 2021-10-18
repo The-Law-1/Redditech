@@ -24,7 +24,7 @@ class _SubredditPageState extends State<SubredditPage> {
       [buildUpperZone("https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80",
       'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80'),
        buildSubredditInfo("Hacking", "A subreddit dedicated to hacking and hackers")]);
-    subredditElements.addAll(createPostsFeed("Best"));
+    //subredditElements.addAll(createPostsFeed("Best"));
 
     return (Scaffold(
         body: ListView(

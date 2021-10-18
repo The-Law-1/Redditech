@@ -16,13 +16,16 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> /* with RedditInfo*/ {
-  List<Widget> postsFeed = createPostsFeed("hot");
+  List<Widget> postsFeed = [];
   String currentPref = "hot";
 
   PostFeed postFeed = PostFeed();
 
   @override
   Widget build(BuildContext context) {
+    postFeed.setInfo(currentPref);
+    postsFeed = postFeed.getFeed();
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -49,22 +52,23 @@ class _HomePageState extends State<HomePage> /* with RedditInfo*/ {
                 icon: const Icon(Icons.fireplace),
                 onPressed: () => setState(() {
                       currentPref = "hot";
-                      postsFeed = createPostsFeed("hot");
                       postFeed.setInfo(currentPref);
+                      postsFeed = postFeed.getFeed();
                     })),
             IconButton(
                 icon: const Icon(Icons.favorite),
                 onPressed: () => setState(() {
                       currentPref = "best";
-                      postsFeed = createPostsFeed("best");
                       postFeed.setInfo(currentPref);
+                      postsFeed = postFeed.getFeed();
                     })),
             IconButton(
                 icon: const Icon(Icons.flash_on),
                 onPressed: () => setState(() {
                       currentPref = "new";
-                      postsFeed = createPostsFeed("new");
                       postFeed.setInfo(currentPref);
+                      postsFeed = postFeed.getFeed();
+
                     })),
           ]);
 }

@@ -1,5 +1,6 @@
 import 'package:draw/draw.dart';
 import 'package:flutter/material.dart';
+import '../model/post_model.dart';
 
 Widget subredditRow(Image pictureImage, String title) {
   const double profPicDiameter = 44;
@@ -37,40 +38,35 @@ Widget buildSubredditsFeedContainer(Image profileImage, String title) {
   );
 }
 
-Widget buildTextPostFeedContainer(Image profImg, String author, String postHeader, String content)
-{
-  List<Widget> postElements = buildPostFeedContainer(profImg, author, postHeader);
+Widget buildPostFeedContainerFromPost(Post post) {
+  if (post.thumbnail == "self" || post.thumbnail == "default") {
+    print("WARNING");
+  }
+  List<Widget> postElements = buildPostFeedContainer(
+      Image.network(post.thumbnail), post.authorName, post.postHeader);
+
+  postElements.add(Text(post.textContent));
+
+  for (var imageUrl in post.previewImages) {
+    try {
+      postElements.add(Image.network(imageUrl));
+    } catch (e) {
+      print(e);
+    }
+  }
 
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      postElements[0],
-      postElements[1],
-      Text(content),
-    ],
-  );
-}
-
-Widget buildImagePostFeedContainer(Image profImg, String author, String postHeader, Image content)
-{
-  List<Widget> postElements = buildPostFeedContainer(profImg, author, postHeader);
-
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      postElements[0],
-      postElements[1],
-      content,
-    ],
+    children: postElements,
   );
 }
 
 // function to generate postFeedContainer with
-  // GIF
-  // VIDEO (https://flutter.dev/docs/cookbook/plugins/play-video)
+// GIF
+// VIDEO (https://flutter.dev/docs/cookbook/plugins/play-video)
 
-List<Widget> buildPostFeedContainer(Image profileImage, String author, String postHeader)
-{
+List<Widget> buildPostFeedContainer(
+    Image profileImage, String author, String postHeader) {
   return ([
     subredditRow(profileImage, author),
     Text(postHeader,
@@ -117,54 +113,5 @@ List<Widget> createSubredditsFeed() {
         Image.network(
             'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80'),
         "Subreddit 10"),
-  ]);
-}
-
-// popular | best | hot | new
-List<Widget> createPostsFeed(String option) {
-
-  return ([
-    buildTextPostFeedContainer(
-        Image.network(
-            'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80'),
-            "Toto",
-            "Post header 1 " + option,
-            "Post content"),
-    buildTextPostFeedContainer(
-        Image.network(
-            'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80'),
-            "Toto",
-            "Post header 2 " + option,
-            "Post content"),
-                buildTextPostFeedContainer(
-        Image.network(
-            'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80'),
-            "Toto",
-            "Post header 3 " + option,
-            "Post content"),
-                buildTextPostFeedContainer(
-        Image.network(
-            'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80'),
-            "Toto",
-            "Post header 4 " + option,
-            "Post content"),
-                buildTextPostFeedContainer(
-        Image.network(
-            'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80'),
-            "Toto",
-            "Post header 5 " + option,
-            "Post content"),
-                buildTextPostFeedContainer(
-        Image.network(
-            'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80'),
-            "Toto",
-            "Post header 6 " + option,
-            "Post content"),
-                buildTextPostFeedContainer(
-        Image.network(
-            'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80'),
-            "Toto",
-            "Post header 7 " + option,
-            "Post content"),
   ]);
 }
