@@ -100,7 +100,7 @@ class _ProfilePageState extends State<ProfilePage> {
       children: [
         Container(
           margin: EdgeInsets.only(bottom: bottomOffset),
-          child: buildCoverImage(),
+          child: buildCoverImage(profile),
         ),
         Positioned(
           top: topOffset,
@@ -113,15 +113,15 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget buildProfileImage(ProfileModel profile) => CircleAvatar(
         radius: profileHeight / 2,
         backgroundColor: Colors.grey.shade800,
-        backgroundImage: NetworkImage(/*profile.profilePicUrl)*/
-            'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=880&q=80'),
+        backgroundImage: NetworkImage(profile.profilePicUrl)
+            /*'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=880&q=80'),*/
       );
 
-  Widget buildCoverImage() => Container(
+  Widget buildCoverImage(ProfileModel profile) => Container(
         color: Colors.grey,
         // replace .network with .asset probably ??
         child: Image.network(
-          'https://images.unsplash.com/photo-1554147090-e1221a04a025?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1448&q=80',
+          profile.bannerPicUrl == "" ? 'https://images.unsplash.com/photo-1554147090-e1221a04a025?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1448&q=80' : profile.bannerPicUrl,
           width: double.infinity,
           height: coverHeight,
           fit: BoxFit.cover,
