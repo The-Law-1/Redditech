@@ -43,16 +43,18 @@ class RedditInfo {
     //return (red);
   }
 
-  static void connection() async {
+  static Future<bool> connection() async {
     try {
       await red.user.me();
       //print("Before connection " + (await red.user.me()).toString());
       print("Client connected");
+      return (true);
     } catch (e) {
       print("Client not connected: " + e.toString());
 
       await _connectToReddit(red);
       print("After connection " + (await red.user.me()).toString());
+      return (false);
     }
   }
 }
