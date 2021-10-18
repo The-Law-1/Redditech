@@ -24,7 +24,11 @@ class ProfileModel {
 
       profilePicUrl = rawJSON['subreddit']['icon_img'];
 
-      profilePicUrl = profilePicUrl.substring(0, profilePicUrl.indexOf('?')); // ! could be unstable/dangerous
+      try {
+        profilePicUrl = profilePicUrl.substring(0, profilePicUrl.indexOf('?')); // ! could be unstable/dangerous
+      } catch (e) {
+        print(e);
+      }
 
       try {
         bannerPicUrl = rawJSON['subreddit']['banner_img'];
