@@ -26,6 +26,14 @@ class _SettingsPageState extends State<SettingsPage> {
     Icons.remove_red_eye,
     Icons.self_improvement,
   ];
+  List<List <String>> parameters = [
+    ['One', 'Two', 'Free', 'Four'],
+    ['Un', 'Deux', 'Trois', 'Quatre']
+  ];
+  List<String> dropdownValue = [
+      'One',
+      'Un',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -45,16 +53,18 @@ class _SettingsPageState extends State<SettingsPage> {
               elevation: 5,
               child: Center(
                 child: ListTile(
-                  leading: Icon(settingsIcon[index],
-                      size: 40,
-                      color:
-                          settingsConditions[index] ? Colors.green : Colors.grey),
-                  title: Text(settingsString[index],
-                      style: DefaultTextStyle.of(context)
-                          .style
-                          .apply(fontSizeFactor: 2.0)),
-                  trailing: buildSwitchButton(Colors.green, Colors.grey, index),
-                ),
+                    leading: Icon(settingsIcon[index],
+                        size: 40,
+                        color: settingsConditions[index]
+                            ? Colors.green
+                            : Colors.grey),
+                    title: Text(settingsString[index],
+                        style: DefaultTextStyle.of(context)
+                            .style
+                            .apply(fontSizeFactor: 2.0)),
+                    trailing: index < 5
+                        ? buildSwitchButton(Colors.green, Colors.grey, index)
+                        : buildDropdownButton(context, index)),
               )),
         );
       },
@@ -72,4 +82,30 @@ class _SettingsPageState extends State<SettingsPage> {
           value: settingsConditions[val],
           onChanged: (value) =>
               setState(() => settingsConditions[val] = value)));
+
+  Widget buildDropdownButton(BuildContext context, val) {
+    return DropdownButton<String>(
+      value: dropdownValue[val-5],
+      icon: const Icon(Icons.arrow_downward),
+      iconSize: 42,
+      //elevation: 16,
+      style: const TextStyle(color: Colors.black, fontSize: 24),
+      /*underline: Container(
+        height: 2,
+        color: Colors.deepPurpleAccent,
+      ),*/
+      onChanged: (String? newValue) {
+        setState(() {
+          dropdownValue[val-5] = newValue!;
+        });
+      },
+      items: parameters[val-5]
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+  }
 }
