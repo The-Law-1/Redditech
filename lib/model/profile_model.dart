@@ -20,7 +20,7 @@ class ProfileModel {
       print("subreddits property " + rawJSON['subreddit'].toString());
 
       userName = rawJSON['subreddit']['title'];
-      description = rawJSON['subreddit']['description'];
+      description = rawJSON['subreddit']['public_description'];
 
       profilePicUrl = rawJSON['subreddit']['icon_img'];
 
