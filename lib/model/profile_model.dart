@@ -20,19 +20,26 @@ class ProfileModel {
       print("subreddits property " + rawJSON['subreddit'].toString());
 
       userName = rawJSON['subreddit']['title'];
+
+      if (userName == "") {
+        userName = rawInfo.displayName;
+      }
+
       description = rawJSON['subreddit']['public_description'];
 
       profilePicUrl = rawJSON['subreddit']['icon_img'];
 
       try {
-        profilePicUrl = profilePicUrl.substring(0, profilePicUrl.indexOf('?')); // ! could be unstable/dangerous
+        profilePicUrl = profilePicUrl.substring(
+            0, profilePicUrl.indexOf('?')); // ! could be unstable/dangerous
       } catch (e) {
         print(e);
       }
 
       try {
         bannerPicUrl = rawJSON['subreddit']['banner_img'];
-        bannerPicUrl = bannerPicUrl.substring(0, bannerPicUrl.indexOf('?')); // ! could be unstable/dangerous
+        bannerPicUrl = bannerPicUrl.substring(
+            0, bannerPicUrl.indexOf('?')); // ! could be unstable/dangerous
 
         // cut off after .jpg
       } catch (e) {
