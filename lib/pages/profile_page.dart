@@ -1,5 +1,6 @@
 import 'package:draw/draw.dart';
 import 'package:flutter/material.dart';
+import 'package:redditech/model/subreddit_model.dart';
 import '../widgets/feed.dart';
 import '../controller/reddit_draw.dart';
 import '../model/profile_model.dart';
@@ -22,6 +23,8 @@ class _ProfilePageState extends State<ProfilePage> {
   List<Widget> profileElements = [];
   ProfileModel profileModel = ProfileModel();
 
+  SubredditFeed subFeed = SubredditFeed();
+
   bool connected = false;
   bool infoSet = false;
 
@@ -31,17 +34,22 @@ class _ProfilePageState extends State<ProfilePage> {
       if (infoSet == false) {
         await profileModel.setInfo();
         print("Welcome back " + profileModel.userName);
+
+        await subFeed.setMyInfo();
+        print("Found my info " + subFeed.subreddits.length.toString());
+
         // remove the loginBtn from the profileElements
         // add the appropriate widgets
         setState(() {
           infoSet = true;
         });
       }
+
       setState(() {
         profileElements = [];
         profileElements.addAll(
             [buildUpperZone(profileModel), buildProfileInfo(profileModel)]);
-        profileElements.addAll(createSubredditsFeed());
+        profileElements.addAll(subFeed.getMySubreddits());
       });
     } else {
       print("Connect yo self");
@@ -111,17 +119,19 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   Widget buildProfileImage(ProfileModel profile) => CircleAvatar(
-        radius: profileHeight / 2,
-        backgroundColor: Colors.grey.shade800,
-        backgroundImage: NetworkImage(profile.profilePicUrl)
-            /*'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=880&q=80'),*/
+      radius: profileHeight / 2,
+      backgroundColor: Colors.grey.shade800,
+      backgroundImage: NetworkImage(profile.profilePicUrl)
+      /*'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=880&q=80'),*/
       );
 
   Widget buildCoverImage(ProfileModel profile) => Container(
         color: Colors.grey,
         // replace .network with .asset probably ??
         child: Image.network(
-          profile.bannerPicUrl == "" ? 'https://images.unsplash.com/photo-1554147090-e1221a04a025?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1448&q=80' : profile.bannerPicUrl,
+          profile.bannerPicUrl == ""
+              ? 'https://images.unsplash.com/photo-1554147090-e1221a04a025?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1448&q=80'
+              : profile.bannerPicUrl,
           width: double.infinity,
           height: coverHeight,
           fit: BoxFit.cover,
