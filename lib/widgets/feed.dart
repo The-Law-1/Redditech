@@ -1,7 +1,7 @@
 import 'package:draw/draw.dart';
 import 'package:flutter/material.dart';
 import '../model/post_model.dart';
-import '../model/search_model.dart';
+import '../model/subreddit_model.dart';
 
 Widget subredditRow(String profileImgUrl, String title) {
   const double profPicDiameter = 44;
@@ -49,7 +49,7 @@ Widget buildSubredditsFeedContainer(String profileImageUrl, String title) {
 
 Widget buildSubredditFeedContaierFromSubreddit(SubredditModel subreddit) {
   List<Widget> postElements = buildPostFeedContainer(subreddit.subredditImgUrl,
-      subreddit.subredditName, subreddit.textContent);
+      subreddit.subredditName, subreddit.description);
 
   postElements.add(Text(subreddit.subredditName));
 

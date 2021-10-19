@@ -44,12 +44,12 @@ class SubredditFeed {
       if (postData['icon_img'] == null) {
         iconImg = "";
       }
-      SubredditModel newSubreddit = SubredditModel(
-          postData['title'],
-          iconImg,
-          postData['public_description'],
-          postData['subscribers'],
-          headerUrl);
+      int? subs = postData['subscribers'];
+
+      subs ??= 0;
+
+      SubredditModel newSubreddit = SubredditModel(postData['title'], iconImg,
+          postData['public_description'], subs, headerUrl);
       subreddits.add(newSubreddit);
     }
     //print("POST 1 : " + firstPost['title']);
