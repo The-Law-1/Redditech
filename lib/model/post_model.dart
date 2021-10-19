@@ -8,6 +8,8 @@ import '../widgets/feed.dart';
 // post modelclass
 class Post {
   late String subredditName = "";
+  late String subredditImgUrl = "";
+
   late String authorName = "";
   late String thumbnail = "";
   late String postHeader = "";
@@ -52,7 +54,6 @@ class PostFeed {
         //print(postData["preview"]["images"][0]["source"]["url"].toString());
         previewImages
             .add(postData["preview"]["images"][0]["source"]["url"].toString());
-        // ! clip the string after .png or .jpg
       } catch (e) {
         //print("No preview");
       }
