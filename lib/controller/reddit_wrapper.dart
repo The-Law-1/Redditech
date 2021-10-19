@@ -23,4 +23,13 @@ class RedditWrapper {
     var response = await http.get(url);
     return (response.body);
   }
+
+  static Future<String> GetSubreddits(String filter) async {
+    // API endpoint
+
+    var url = Uri.parse('https://www.reddit.com/subreddits/search.json?q=' + filter);
+
+    var response = await http.get(url);
+    return (response.body);
+  }
 }

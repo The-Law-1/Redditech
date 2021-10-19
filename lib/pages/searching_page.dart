@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:redditech/model/search_model.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class SearchingPage extends StatefulWidget {
@@ -9,20 +10,23 @@ class SearchingPage extends StatefulWidget {
 }
 
 class _SearchingPageState extends State<SearchingPage> {
+  SubredditFeed subredditFeed = SubredditFeed();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(
         fit: StackFit.expand,
         children: [
-          buildFloatingSearchBar(context),
+          buildFloatingSearchBar(context, subredditFeed),
         ],
       ),
     );
   }
 }
 
-Widget buildFloatingSearchBar(BuildContext context) {
+Widget buildFloatingSearchBar(
+    BuildContext context, SubredditFeed subredditFeed) {
   final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
   return FloatingSearchBar(
@@ -36,7 +40,8 @@ Widget buildFloatingSearchBar(BuildContext context) {
     width: isPortrait ? 600 : 500,
     debounceDelay: const Duration(milliseconds: 500),
     onQueryChanged: (query) {
-      print(query);
+      //ici j'appelle l'api avec query qui est le mot en param
+      subredditFeed.setInfo(query);
       // Call your model, bloc, controller here.
     },
     // Specify a custom transition to be used for
