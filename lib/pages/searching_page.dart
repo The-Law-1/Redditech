@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:redditech/model/search_model.dart';
+import 'package:redditech/model/subreddit_model.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class SearchingPage extends StatefulWidget {
