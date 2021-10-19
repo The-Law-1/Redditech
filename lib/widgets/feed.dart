@@ -1,6 +1,7 @@
 import 'package:draw/draw.dart';
 import 'package:flutter/material.dart';
 import '../model/post_model.dart';
+import '../model/search_model.dart';
 
 Widget subredditRow(String profileImgUrl, String title) {
   const double profPicDiameter = 44;
@@ -46,13 +47,24 @@ Widget buildSubredditsFeedContainer(String profileImageUrl, String title) {
   );
 }
 
+Widget buildSubredditFeedContaierFromSubreddit(SubredditModel subreddit) {
+  List<Widget> postElements = buildPostFeedContainer(subreddit.subredditImgUrl,
+      subreddit.subredditName, subreddit.textContent);
+
+  postElements.add(Text(subreddit.subredditName));
+
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: postElements,
+  );
+}
+
 Widget buildPostFeedContainerFromPost(Post post) {
   if (post.thumbnail == "self" || post.thumbnail == "default") {
     print("WARNING");
   }
 
-  void ExpandPost()
-  {
+  void ExpandPost() {
     // add to navigation the post page (which takes a post)
   }
 

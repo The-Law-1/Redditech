@@ -21,23 +21,53 @@ class SubredditFeed {
 
   Future<bool> setInfo(String query) async {
     String postsList = await SearchController.GetSubreddits(query);
+    String iconImg = "";
 
+    print("QUERY: " + query);
+    if (postsList == "") {
+      return false;
+    }
     var jsonPosts = jsonDecode(postsList);
-    var data = jsonPosts["data"];
-    List actualPosts = data["children"];
-    var firstPost = actualPosts[0]["data"];
-    var secPost = actualPosts[1]["data"];
-    var thirdPost = actualPosts[2]["data"];
+    print("JSON: " + jsonPosts.toString());
+    var data = jsonPosts['data'];
+    List actualPosts = data['children'];
+    //var firstPost = actualPosts[0]["data"];
 
-    print("POST 1 : " + firstPost['title']);
-    print("POST 2 : " + secPost['title']);
-    print("POST 3 : " + thirdPost['title']);
+    for (var i = 0; i < actualPosts.length; i++) {
+      var postData = actualPosts[i]['data'];
+
+      String? headerUrl = postData['header_img'];
+
+      // if null, assign to ""
+      headerUrl ??= "";
+
+      if (postData['icon_img'] == null) {
+        iconImg = "";
+      }
+      SubredditModel newSubreddit = SubredditModel(
+          postData['title'],
+          iconImg,
+          postData['public_description'],
+          postData['subscribers'],
+          headerUrl);
+      subreddits.add(newSubreddit);
+    }
+    //print("POST 1 : " + firstPost['title']);
     return (true);
+  }
+
+  List<Widget> getFeed() {
+    List<Widget> postWidgets = [];
+
+    for (var i = 0; i < subreddits.length; i++) {
+      postWidgets.add(subredditRow(
+          subreddits[i].subredditImgUrl, subreddits[i].subredditName));
+    }
+    return (postWidgets);
   }
 
   Future<List<SubredditModel>> getSubredditsFromStream(
       Stream<Subreddit> subStream) async {
-
     await for (final value in subStream) {
       var jsonVal = jsonDecode(value.toString());
       //print(jsonVal['header_img']);
@@ -75,8 +105,8 @@ class SubredditFeed {
     List<Widget> subredditWidgets = [];
 
     for (var i = 0; i < subreddits.length; i++) {
-      subredditWidgets.add(
-          subredditRow(subreddits[i].subredditImgUrl, subreddits[i].subredditName));
+      subredditWidgets.add(subredditRow(
+          subreddits[i].subredditImgUrl, subreddits[i].subredditName));
     }
     return (subredditWidgets);
   }
