@@ -19,12 +19,24 @@ class _HomePageState extends State<HomePage> /* with RedditInfo*/ {
   List<Widget> postsFeed = [];
   String currentPref = "hot";
 
+  bool initialized = false;
   PostFeed postFeed = PostFeed();
+
+  void Initialize() async {
+    if (initialized) {
+      return;
+    }
+    await postFeed.setInfo(currentPref);
+    setState(() {
+      postsFeed = postFeed.getFeed();
+      initialized = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    postFeed.setInfo(currentPref);
-    postsFeed = postFeed.getFeed();
+    // needs await here
+    Initialize();
 
     return Scaffold(
       appBar: AppBar(
@@ -68,7 +80,6 @@ class _HomePageState extends State<HomePage> /* with RedditInfo*/ {
                       currentPref = "new";
                       postFeed.setInfo(currentPref);
                       postsFeed = postFeed.getFeed();
-
                     })),
           ]);
 }

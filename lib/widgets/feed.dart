@@ -51,12 +51,20 @@ Widget buildPostFeedContainerFromPost(Post post) {
     print("WARNING");
   }
 
-  List<Widget> postElements =
-      buildPostFeedContainer(post.subredditImgUrl, post.authorName, post.postHeader);
+  void ExpandPost()
+  {
+    // add to navigation the post page (which takes a post)
+  }
+
+  List<Widget> postElements = buildPostFeedContainer(
+      post.subredditImgUrl, post.authorName, post.postHeader);
 
   postElements.add(Text(post.textContent));
 
-  if (post.thumbnail != "" && post.thumbnail != "self" && post.thumbnail != "default" && post.thumbnail != "spoiler") {
+  if (post.thumbnail != "" &&
+      post.thumbnail != "self" &&
+      post.thumbnail != "default" &&
+      post.thumbnail != "spoiler") {
     postElements.add(Image.network(post.thumbnail));
   }
   // for (var imageUrl in post.previewImages) {
@@ -93,7 +101,7 @@ List<Widget> createSubredditsFeed() {
         'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80',
         "Subreddit 1"),
     buildSubredditsFeedContainer(
-         'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80',
+        'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80',
         "Subreddit 2"),
     buildSubredditsFeedContainer(
         'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80',
