@@ -54,20 +54,20 @@ class _SearchingPageState extends State<SearchingPage> {
       openAxisAlignment: 0.0,
       width: isPortrait ? 600 : 500,
       debounceDelay: const Duration(milliseconds: 500),
-      onSubmitted: (query) {
-        print("On submitted " + query);
-        setState(() async {
+      onSubmitted: (query) async {
+          print("On submitted " + query);
           await subredditFeed.setInfo(query);
-          subredditsFeed = [];
-          subredditsFeed = subredditFeed.getFeed();
-        });
+          setState(() {
+            subredditsFeed = [];
+            subredditsFeed = subredditFeed.getFeed();
+          });
       },
       onQueryChanged: (query) {
         //ici j'appelle l'api avec query qui est le mot en param
         //subredditFeed.setInfo(query);
-        setState(() {
-          globalQuery = query;
-        });
+        // setState(() {
+        //   globalQuery = query;
+        // });
         // Call your model, bloc, controller here.
       },
       // Specify a custom transition to be used for
@@ -78,10 +78,10 @@ class _SearchingPageState extends State<SearchingPage> {
           showIfOpened: false,
           child: CircularButton(
             icon: const Icon(Icons.manage_search),
-            onPressed: () {
+            onPressed: () async {
               print("On pressed");
-              setState(() async {
-                await subredditFeed.setInfo(globalQuery);
+              await subredditFeed.setInfo(globalQuery);
+              setState(() {
                 subredditsFeed = [];
                 subredditsFeed = subredditFeed.getFeed();
               });

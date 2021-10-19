@@ -36,6 +36,7 @@ class PostFeed {
   late String preference = "hot";
 
   Future<bool> setInfo(String newPref) async {
+    posts = [];
     preference = newPref;
 
     String postsList = await PostController.GetDefaultPosts(newPref);

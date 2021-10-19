@@ -62,24 +62,31 @@ class _HomePageState extends State<HomePage> /* with RedditInfo*/ {
           children: <Widget>[
             IconButton(
                 icon: const Icon(Icons.fireplace),
-                onPressed: () => setState(() {
-                      currentPref = "hot";
-                      postFeed.setInfo(currentPref);
-                      postsFeed = postFeed.getFeed();
-                    })),
+                onPressed: () async {
+                  await postFeed.setInfo("hot");
+                  setState(() {
+                    currentPref = "hot";
+                    postsFeed = postFeed.getFeed();
+                  });
+                }),
             IconButton(
                 icon: const Icon(Icons.favorite),
-                onPressed: () => setState(() {
-                      currentPref = "best";
-                      postFeed.setInfo(currentPref);
-                      postsFeed = postFeed.getFeed();
-                    })),
+                onPressed: () async {
+                  await postFeed.setInfo("best");
+                  setState(() {
+                    currentPref = "best";
+                    postsFeed = postFeed.getFeed();
+                  });
+                }),
             IconButton(
                 icon: const Icon(Icons.flash_on),
-                onPressed: () => setState(() {
-                      currentPref = "new";
-                      postFeed.setInfo(currentPref);
-                      postsFeed = postFeed.getFeed();
-                    })),
+                onPressed: () async {
+                  await postFeed.setInfo("new");
+                  print("Filter: NEW " + postFeed.posts[0].postHeader);
+                  setState(() {
+                    currentPref = "new";
+                    postsFeed = postFeed.getFeed();
+                  });
+                }),
           ]);
 }

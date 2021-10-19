@@ -20,6 +20,8 @@ class SubredditFeed {
   late List<SubredditModel> subreddits = [];
 
   Future<bool> setInfo(String query) async {
+    subreddits = [];
+
     String postsList = await SearchController.GetSubreddits(query);
     String iconImg = "";
 
@@ -28,7 +30,7 @@ class SubredditFeed {
       return false;
     }
     var jsonPosts = jsonDecode(postsList);
-    print("JSON: " + jsonPosts.toString());
+    //print("JSON: " + jsonPosts.toString());
     var data = jsonPosts['data'];
     List actualPosts = data['children'];
     //var firstPost = actualPosts[0]["data"];
@@ -69,6 +71,8 @@ class SubredditFeed {
   Future<List<SubredditModel>> getSubredditsFromStream(
       Stream<Subreddit> subStream) async {
     await for (final value in subStream) {
+      subreddits = [];
+
       var jsonVal = jsonDecode(value.toString());
       //print(jsonVal['header_img']);
 
