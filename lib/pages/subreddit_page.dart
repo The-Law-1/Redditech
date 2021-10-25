@@ -7,12 +7,13 @@ import '../widgets/feed.dart';
 
 void ExpandSubredditPage(BuildContext context, SubredditModel subreddit) {
   Navigator.push(
-      context, MaterialPageRoute(builder: (context) => const SubredditPage()));
+      context, MaterialPageRoute(builder: (context) => SubredditPage(subredditModel: subreddit)));
 }
 
 // takes a subreddit object with
 class SubredditPage extends StatefulWidget {
-  const SubredditPage({Key? key}) : super(key: key);
+  final SubredditModel subredditModel;
+  const SubredditPage({Key? key, required this.subredditModel}) : super(key: key);
 
   @override
   _SubredditPageState createState() => _SubredditPageState();
@@ -28,10 +29,10 @@ class _SubredditPageState extends State<SubredditPage> {
     subredditElements = [];
     subredditElements.addAll([
       buildUpperZone(
-          "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80",
-          'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80'),
+          widget.subredditModel.headerUrl,
+          widget.subredditModel.subredditImgUrl),
       buildSubredditInfo(
-          "Hacking", "A subreddit dedicated to hacking and hackers")
+          widget.subredditModel.subredditName, widget.subredditModel.description)
     ]);
     //subredditElements.addAll(createPostsFeed("Best"));
 
@@ -57,6 +58,7 @@ class _SubredditPageState extends State<SubredditPage> {
           const SizedBox(height: 8),
           Text(
             description,
+            textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 20, color: Colors.black),
           )
         ],
