@@ -28,7 +28,9 @@ class _SearchingPageState extends State<SearchingPage> {
 
   @override
   Widget build(BuildContext context) {
+    subredditFeed.setContext(context);
     Initialize(context);
+
     return Scaffold(
       body: Stack(fit: StackFit.expand, children: [
         ListView(
@@ -55,12 +57,12 @@ class _SearchingPageState extends State<SearchingPage> {
       width: isPortrait ? 600 : 500,
       debounceDelay: const Duration(milliseconds: 500),
       onSubmitted: (query) async {
-          print("On submitted " + query);
-          await subredditFeed.setInfo(query);
-          setState(() {
-            subredditsFeed = [];
-            subredditsFeed = subredditFeed.getFeed();
-          });
+        print("On submitted " + query);
+        await subredditFeed.setInfo(query);
+        setState(() {
+          subredditsFeed = [];
+          subredditsFeed = subredditFeed.getFeed();
+        });
       },
       onQueryChanged: (query) {
         //ici j'appelle l'api avec query qui est le mot en param

@@ -18,6 +18,11 @@ class SubredditModel {
 
 class SubredditFeed {
   late List<SubredditModel> subreddits = [];
+  late BuildContext context;
+
+  void setContext(BuildContext ctx) {
+    context = ctx;
+  }
 
   Future<bool> setInfo(String query) async {
     subreddits = [];
@@ -64,17 +69,16 @@ class SubredditFeed {
     List<Widget> postWidgets = [];
 
     for (var i = 0; i < subreddits.length; i++) {
-      postWidgets.add(subredditFeedItem(subreddits[i]));
+      postWidgets.add(subredditFeedItem(subreddits[i], context));
     }
     return (postWidgets);
   }
 
   Future<List<SubredditModel>> getSubredditsFromStream(
       Stream<Subreddit> subStream) async {
-      subreddits = [];
+    subreddits = [];
 
     await for (final value in subStream) {
-
       var jsonVal = jsonDecode(value.toString());
       //print(jsonVal['header_img']);
 
@@ -111,7 +115,7 @@ class SubredditFeed {
     List<Widget> subredditWidgets = [];
 
     for (var i = 0; i < subreddits.length; i++) {
-      subredditWidgets.add(subredditFeedItem(subreddits[i]));
+      subredditWidgets.add(subredditFeedItem(subreddits[i], context));
     }
     return (subredditWidgets);
   }

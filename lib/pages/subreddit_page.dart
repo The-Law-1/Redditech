@@ -1,10 +1,16 @@
 import 'package:draw/draw.dart';
 import 'package:flutter/material.dart';
+import 'package:redditech/model/subreddit_model.dart';
 import '../widgets/feed.dart';
 
 // ! https://www.youtube.com/watch?v=X95-2wES1II&ab_channel=JohannesMilke
 
-// takes a subreddit object with 
+void ExpandSubredditPage(BuildContext context, SubredditModel subreddit) {
+  Navigator.push(
+      context, MaterialPageRoute(builder: (context) => const SubredditPage()));
+}
+
+// takes a subreddit object with
 class SubredditPage extends StatefulWidget {
   const SubredditPage({Key? key}) : super(key: key);
 
@@ -20,17 +26,25 @@ class _SubredditPageState extends State<SubredditPage> {
   @override
   Widget build(BuildContext context) {
     subredditElements = [];
-    subredditElements.addAll(
-      [buildUpperZone("https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80",
-      'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80'),
-       buildSubredditInfo("Hacking", "A subreddit dedicated to hacking and hackers")]);
+    subredditElements.addAll([
+      buildUpperZone(
+          "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80",
+          'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80'),
+      buildSubredditInfo(
+          "Hacking", "A subreddit dedicated to hacking and hackers")
+    ]);
     //subredditElements.addAll(createPostsFeed("Best"));
 
     return (Scaffold(
-        body: ListView(
-          padding: EdgeInsets.zero,
-          children: subredditElements,
-        )));
+      appBar: AppBar(
+        // Here we take the value from the MyHomePage object that was created by
+        // the App.build method, and use it to set our appbar title.
+        //title: const Text(''),
+      ),
+      body: ListView(
+      padding: EdgeInsets.zero,
+      children: subredditElements,
+    )));
   }
 
   Widget buildSubredditInfo(String subredditName, String description) => Column(
@@ -51,7 +65,8 @@ class _SubredditPageState extends State<SubredditPage> {
   Widget buildUpperZone(String imageUrl, String bannerUrl) {
     final bottomOffset = profileHeight / 2; // offset for text
 
-    final topOffset = coverHeight - profileHeight / 2; // offset between coverHeight and profile pic
+    final topOffset = coverHeight -
+        profileHeight / 2; // offset between coverHeight and profile pic
 
     return Stack(
       clipBehavior: Clip.none,
@@ -70,11 +85,9 @@ class _SubredditPageState extends State<SubredditPage> {
   }
 
   Widget buildSubredditImage(String imgUrl) => CircleAvatar(
-        radius: profileHeight / 2,
-        backgroundColor: Colors.grey.shade800,
-        backgroundImage: NetworkImage(
-            imgUrl
-      ));
+      radius: profileHeight / 2,
+      backgroundColor: Colors.grey.shade800,
+      backgroundImage: NetworkImage(imgUrl));
 
   Widget buildCoverImage(String imgUrl) => Container(
         color: Colors.grey,

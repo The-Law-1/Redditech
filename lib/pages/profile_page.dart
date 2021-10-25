@@ -59,6 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    subFeed.setContext(context);
     SetProfilePage();
 
     return (Scaffold(

@@ -1,12 +1,13 @@
 import 'package:draw/draw.dart';
 import 'package:flutter/material.dart';
+import 'package:redditech/pages/subreddit_page.dart';
 import '../model/post_model.dart';
 import '../model/subreddit_model.dart';
 
-Widget subredditFeedItem(SubredditModel subreddit)
+Widget subredditFeedItem(SubredditModel subreddit, BuildContext context)
 {
   return OutlinedButton(
-   onPressed: () => print("Open subreddit " + subreddit.subredditName),
+   onPressed: () => ExpandSubredditPage(context, subreddit),
    child: subredditRow(subreddit.subredditImgUrl, subreddit.subredditName)
   );
 }
