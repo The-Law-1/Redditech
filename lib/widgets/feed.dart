@@ -3,6 +3,15 @@ import 'package:flutter/material.dart';
 import '../model/post_model.dart';
 import '../model/subreddit_model.dart';
 
+Widget subredditFeedItem(SubredditModel subreddit)
+{
+  return OutlinedButton(
+   onPressed: () => print("Open subreddit " + subreddit.subredditName),
+   child: subredditRow(subreddit.subredditImgUrl, subreddit.subredditName)
+  );
+}
+
+// pass bool for subreddit expand possibility ?
 Widget subredditRow(String profileImgUrl, String title) {
   const double profPicDiameter = 44;
 
@@ -14,9 +23,8 @@ Widget subredditRow(String profileImgUrl, String title) {
     finalImg = Image.network(profileImgUrl);
   }
 
-  return Container(
-    //onTap: () => BlocProvider.of<HomeNavigatorCubit>(context).showProfile(),
-    child: Row(
+  return
+    Row(
       children: [
         Padding(
           padding: const EdgeInsets.all(8),
@@ -35,8 +43,7 @@ Widget subredditRow(String profileImgUrl, String title) {
           ),
         )
       ],
-    ),
-  );
+    );
 }
 
 // widget for subreddit feed container
@@ -103,38 +110,5 @@ List<Widget> buildPostFeedContainer(
     subredditRow(profileImageUrl, author),
     Text(postHeader,
         style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32))
-  ]);
-}
-
-// tmp function returning a list of subreddit feed items
-List<Widget> createSubredditsFeed() {
-  return ([
-    buildSubredditsFeedContainer(
-        'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80',
-        "Subreddit 1"),
-    buildSubredditsFeedContainer(
-        'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80',
-        "Subreddit 2"),
-    buildSubredditsFeedContainer(
-        'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80',
-        "Subreddit 4"),
-    buildSubredditsFeedContainer(
-        'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80',
-        "Subreddit 5"),
-    buildSubredditsFeedContainer(
-        'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80',
-        "Subreddit 6"),
-    buildSubredditsFeedContainer(
-        'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80',
-        "Subreddit 7"),
-    buildSubredditsFeedContainer(
-        'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80',
-        "Subreddit 8"),
-    buildSubredditsFeedContainer(
-        'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80',
-        "Subreddit 9"),
-    buildSubredditsFeedContainer(
-        'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2070&q=80',
-        "Subreddit 10"),
   ]);
 }

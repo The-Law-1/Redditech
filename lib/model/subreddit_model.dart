@@ -64,16 +64,16 @@ class SubredditFeed {
     List<Widget> postWidgets = [];
 
     for (var i = 0; i < subreddits.length; i++) {
-      postWidgets.add(subredditRow(
-          subreddits[i].subredditImgUrl, subreddits[i].subredditName));
+      postWidgets.add(subredditFeedItem(subreddits[i]));
     }
     return (postWidgets);
   }
 
   Future<List<SubredditModel>> getSubredditsFromStream(
       Stream<Subreddit> subStream) async {
-    await for (final value in subStream) {
       subreddits = [];
+
+    await for (final value in subStream) {
 
       var jsonVal = jsonDecode(value.toString());
       //print(jsonVal['header_img']);
@@ -111,8 +111,7 @@ class SubredditFeed {
     List<Widget> subredditWidgets = [];
 
     for (var i = 0; i < subreddits.length; i++) {
-      subredditWidgets.add(subredditRow(
-          subreddits[i].subredditImgUrl, subreddits[i].subredditName));
+      subredditWidgets.add(subredditFeedItem(subreddits[i]));
     }
     return (subredditWidgets);
   }
