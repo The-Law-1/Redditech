@@ -32,7 +32,7 @@ class _SubredditPageState extends State<SubredditPage> {
           widget.subredditModel.headerUrl,
           widget.subredditModel.subredditImgUrl),
       buildSubredditInfo(
-          widget.subredditModel.subredditName, widget.subredditModel.description)
+          widget.subredditModel.subredditName, widget.subredditModel.description, widget.subredditModel.subscribers)
     ]);
     //subredditElements.addAll(createPostsFeed("Best"));
 
@@ -48,7 +48,7 @@ class _SubredditPageState extends State<SubredditPage> {
     )));
   }
 
-  Widget buildSubredditInfo(String subredditName, String description) => Column(
+  Widget buildSubredditInfo(String subredditName, String description, int subs) => Column(
         children: [
           const SizedBox(height: 8),
           Text(
@@ -60,6 +60,14 @@ class _SubredditPageState extends State<SubredditPage> {
             description,
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 20, color: Colors.black),
+          ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+            child: Text(
+              "Subscribers: " + subs.toString(),
+              textAlign: TextAlign.right,
+              style: const TextStyle(fontSize: 20, color: Colors.black),
+            ),
           )
         ],
       );
