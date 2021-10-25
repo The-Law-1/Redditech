@@ -45,6 +45,8 @@ class SubredditFeed {
 
       if (postData['icon_img'] == null) {
         iconImg = "";
+      } else {
+        iconImg = postData['icon_img'];
       }
       int? subs = postData['subscribers'];
 
