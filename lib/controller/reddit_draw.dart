@@ -18,6 +18,7 @@ import 'package:flutter_web_auth/flutter_web_auth.dart';
 class RedditInfo {
   //factory RedditInfo_() => null;
 
+  // ! should the clientID be a secret ??
   static var red = Reddit.createInstalledFlowInstance(
     clientId: "MMGIkAwcebtbAJ4IOEGV4A",
     userAgent: "Appdev",
@@ -41,6 +42,16 @@ class RedditInfo {
 
     return (red.toString());
     //return (red);
+  }
+
+  static Future<bool> isConnected() async {
+    try {
+      await red.user.me();
+      return (true);
+    } catch (e) {
+      return (false);
+    }
+
   }
 
   static Future<bool> connection() async {

@@ -28,10 +28,13 @@ class _SearchingPageState extends State<SearchingPage> {
 
   @override
   Widget build(BuildContext context) {
+    subredditFeed.setContext(context);
     Initialize(context);
+
     return Scaffold(
       body: Stack(fit: StackFit.expand, children: [
         ListView(
+          padding: const EdgeInsets.only(top: 120),
           children: subredditsFeed,
         ),
         buildFloatingSearchBar(context),
@@ -54,10 +57,10 @@ class _SearchingPageState extends State<SearchingPage> {
       openAxisAlignment: 0.0,
       width: isPortrait ? 600 : 500,
       debounceDelay: const Duration(milliseconds: 500),
-      onSubmitted: (query) {
+      onSubmitted: (query) async {
         print("On submitted " + query);
-        setState(() async {
-          await subredditFeed.setInfo(query);
+        await subredditFeed.setInfo(query);
+        setState(() {
           subredditsFeed = [];
           subredditsFeed = subredditFeed.getFeed();
         });
@@ -65,9 +68,9 @@ class _SearchingPageState extends State<SearchingPage> {
       onQueryChanged: (query) {
         //ici j'appelle l'api avec query qui est le mot en param
         //subredditFeed.setInfo(query);
-        setState(() {
-          globalQuery = query;
-        });
+        // setState(() {
+        //   globalQuery = query;
+        // });
         // Call your model, bloc, controller here.
       },
       // Specify a custom transition to be used for
@@ -78,10 +81,10 @@ class _SearchingPageState extends State<SearchingPage> {
           showIfOpened: false,
           child: CircularButton(
             icon: const Icon(Icons.manage_search),
-            onPressed: () {
+            onPressed: () async {
               print("On pressed");
-              setState(() async {
-                await subredditFeed.setInfo(globalQuery);
+              await subredditFeed.setInfo(globalQuery);
+              setState(() {
                 subredditsFeed = [];
                 subredditsFeed = subredditFeed.getFeed();
               });

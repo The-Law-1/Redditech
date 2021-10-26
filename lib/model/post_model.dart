@@ -35,13 +35,24 @@ class PostFeed {
   late List<Post> posts = [];
   late String preference = "hot";
 
-  Future<bool> setInfo(String newPref) async {
+  Future<bool> setInfo(String newPref, {String subredditName = ""}) async {
+    posts = [];
     preference = newPref;
 
-    String postsList = await PostController.GetDefaultPosts(newPref);
+    String postsList = "";
+
+    if (subredditName == "") {
+      postsList = await PostController.GetDefaultPosts(newPref);
+    } else {
+      postsList =
+          await PostController.getSubredditPosts(newPref, subredditName);
+    }
 
     // json decode
     var jsonPosts = jsonDecode(postsList);
+
+    print(jsonPosts);
+
     var data = jsonPosts["data"];
     List actualPosts = data["children"];
 
@@ -58,9 +69,16 @@ class PostFeed {
         //print("No preview");
       }
 
+      String authorName = "";
+      try {
+        authorName = postData['author_fullname'];
+      } catch (e) {
+        authorName = "";
+      }
+
       Post newPost = Post(
           postData['subreddit'],
-          postData['author_fullname'],
+          authorName,
           postData['thumbnail'],
           postData['title'],
           previewImages,
