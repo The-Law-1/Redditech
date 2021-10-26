@@ -11,46 +11,32 @@ class SettingsPage extends StatefulWidget {
 
 class _SettingsPageState extends State<SettingsPage> {
   List<Widget> settingsElements = [];
-  List<bool> settingsConditions = [true, false, true, true, false, true];
-  List<String> settingsString = [
-    "One more time",
-    "High Life",
-    "Voyager",
-    "Crescendolls",
-    "Superheroes",
-    "Face to Face"
-  ];
-  List<IconData> settingsIcon = [
-    Icons.account_circle_rounded,
-    Icons.agriculture_rounded,
-    Icons.favorite_border,
-    Icons.light_mode_outlined,
-    Icons.remove_red_eye,
-    Icons.self_improvement,
-  ];
-  List<List<String>> parameters = [
-    ['One', 'Two', 'Free', 'Four'],
-    ['Un', 'Deux', 'Trois', 'Quatre']
-  ];
-  List<String> dropdownValue = [
-    'One',
-    'Un',
-  ];
 
   bool connected = false;
+  bool infoSet = false;
 
   void querySettingsAPI() async {
     print("Waiting for settings...");
 
     connected = await RedditInfo.isConnected();
     if (connected) {
-      var result = await RedditInfo.red.get("api/v1/me/prefs");
+      if (infoSet == false) {
+        print("checkpoint");
+        var result =
+            await RedditInfo.red.get("api/v1/me/prefs", objectify: false);
 
-      print("Prefs result " + result);
-      setState(() {
-        settingsElements = [];
-        settingsElements.add(simpleButton(0));
-      });
+        //RedditInfo.red.
+        //'https://oauth.reddit.com/api/v1/me/prefs' -X PATCH -d '{"lang": "en-us"}'
+
+        result['over_18'] = true;
+        print("Prefs result " + result.toString());
+        setState(() {
+          infoSet = true;
+          settingsElements = [];
+          settingsElements.add(
+              simpleButton(result['over_18'], "Over 18", Icons.block_outlined));
+        });
+      }
     } else {
       print("Connect yo self");
     }
@@ -68,54 +54,18 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return (Scaffold(
         body: ListView(
-      //padding: EdgeInsets.zero,
-      padding: connected ? EdgeInsets.zero : const EdgeInsets.only(top: 100),
+      padding: const EdgeInsets.only(top: 100),
 
       children: settingsElements,
     )));
-  
-    /*return (Scaffold(      
-        body: ListView.separated(
-      padding: const EdgeInsets.only(top: 70),
-      separatorBuilder: (BuildContext context, int index) => const Divider(),
-      itemCount: settingsConditions.length,
-      itemBuilder: (BuildContext context, int index) {
-        return Container(
-          height: 100,
-          child: Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15.0),
-              ),
-              margin: const EdgeInsets.all(5),
-              shadowColor: Colors.blueGrey,
-              elevation: 5,
-              child: Center(
-                child: ListTile(
-                    leading: Icon(settingsIcon[index],
-                        size: 40,
-                        color: settingsConditions[index]
-                            ? Colors.green
-                            : Colors.grey),
-                    title: Text(settingsString[index],
-                        style: DefaultTextStyle.of(context)
-                            .style
-                            .apply(fontSizeFactor: 2.0)),
-                    trailing: index < 5
-                        ? buildSwitchButton(Colors.green, Colors.grey, index)
-                        : buildDropdownButton(context, index)),
-              )),
-        );
-      },
-    )));*/
   }
 
-  Widget simpleButton(value) {
+  Widget simpleButton(value, text, icon) {
     return ListTile(
-      leading: Icon(Icons.remove_red_eye,
-          size: 40, color: value ? Colors.green : Colors.grey),
-      title: Text("button",
+      leading: Icon(icon, size: 40, color: value ? Colors.green : Colors.grey),
+      title: Text(text,
           style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0)),
-      trailing: buildSwitchButton(Colors.green, Colors.grey, 0),
+      trailing: buildSwitchButton(Colors.green, Colors.grey, value),
     );
   }
 
@@ -127,11 +77,11 @@ class _SettingsPageState extends State<SettingsPage> {
           activeTrackColor: colorOn.withOpacity(0.4),
           inactiveThumbColor: colorOff,
           inactiveTrackColor: colorOff.withOpacity(0.3),
-          value: settingsConditions[val],
-          onChanged: (value) =>
-              setState(() => settingsConditions[val] = value)));
+          value: val,
+          onChanged: (value) => setState(() {
+              })));
 
-  Widget buildDropdownButton(BuildContext context, val) {
+  /*Widget buildDropdownButton(BuildContext context, val) {
     return DropdownButton<String>(
       value: dropdownValue[val - 5],
       icon: const Icon(Icons.arrow_downward),
@@ -154,5 +104,5 @@ class _SettingsPageState extends State<SettingsPage> {
         );
       }).toList(),
     );
-  }
+  }*/
 }
