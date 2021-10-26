@@ -34,6 +34,7 @@ class _SearchingPageState extends State<SearchingPage> {
     return Scaffold(
       body: Stack(fit: StackFit.expand, children: [
         ListView(
+          padding: const EdgeInsets.only(top: 120),
           children: subredditsFeed,
         ),
         buildFloatingSearchBar(context),
