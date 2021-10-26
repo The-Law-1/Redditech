@@ -76,6 +76,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 if (currentIndex == 2) {
                   screens[currentIndex] = SettingsPage();
                 }
+                if (currentIndex == 3) {
+                  screens[currentIndex] = ProfilePage();
+                }
               });
             },
             items: const [

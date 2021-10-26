@@ -4,15 +4,19 @@ import 'package:redditech/pages/subreddit_page.dart';
 import '../model/post_model.dart';
 import '../model/subreddit_model.dart';
 
-Widget subredditFeedItem(SubredditModel subreddit, BuildContext context) {
+Widget subredditFeedItem(SubredditModel subreddit, BuildContext context,
+    {VoidCallback faveCallback = defaultCallback}) {
   return OutlinedButton(
       onPressed: () => ExpandSubredditPage(context, subreddit),
       child: subredditRow(subreddit.subredditImgUrl, subreddit.subredditName,
-          isFaved: subreddit.isJoined));
+          isFaved: subreddit.isJoined, faveCallback: faveCallback));
 }
 
+void defaultCallback() {}
+
 // pass bool for subreddit expand possibility ?
-Widget subredditRow(String profileImgUrl, String title, {isFaved = false}) {
+Widget subredditRow(String profileImgUrl, String title,
+    {isFaved = false, VoidCallback faveCallback = defaultCallback}) {
   const double profPicDiameter = 44;
 
   Image defaultImage =
@@ -45,11 +49,11 @@ Widget subredditRow(String profileImgUrl, String title, {isFaved = false}) {
       IconButton(
           onPressed: () async {
             if (!isFaved) {
-             await subscribeToSubreddit(title);
-
+              await subscribeToSubreddit(title);
             } else {
               await unsubscribeToSubreddit(title);
             }
+            faveCallback();
           },
           icon: Icon(isFaved ? Icons.favorite : Icons.favorite_outline))
     ],

@@ -115,18 +115,17 @@ class SubredditFeed {
     return (true);
   }
 
-  List<Widget> getMySubreddits() {
+  List<Widget> getMySubreddits({VoidCallback faveCallback = defaultCallback}) {
     List<Widget> subredditWidgets = [];
 
     for (var i = 0; i < subreddits.length; i++) {
-      subredditWidgets.add(subredditFeedItem(subreddits[i], context));
+      subredditWidgets.add(subredditFeedItem(subreddits[i], context, faveCallback:faveCallback));
     }
     return (subredditWidgets);
   }
 }
 
 Future<void> subscribeToSubreddit(String name) async {
-
   if (await RedditInfo.isConnected() == false) {
     return;
   }
@@ -144,7 +143,6 @@ Future<void> subscribeToSubreddit(String name) async {
 }
 
 Future<void> unsubscribeToSubreddit(String name) async {
-
   if (await RedditInfo.isConnected() == false) {
     return;
   }

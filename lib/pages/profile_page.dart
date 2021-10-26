@@ -31,6 +31,24 @@ class _ProfilePageState extends State<ProfilePage> {
   bool connected = false;
   bool infoSet = false;
 
+  void updateSubredditList() async {
+    await subFeed.setMyInfo();
+    List<Widget> newSubredditFeed =
+        subFeed.getMySubreddits(faveCallback: updateSubredditList);
+
+    if (newSubredditFeed.length != subredditFeed.length) {
+      setState(() {
+        subredditFeed = newSubredditFeed;
+
+        print("Updating profile subreddit feed");
+
+        finalProfileElements = [];
+        finalProfileElements.addAll(profileInfoElements);
+        finalProfileElements.addAll(subredditFeed);
+      });
+    }
+  }
+
   void SetProfilePage() async {
     connected = await RedditInfo.isConnected();
     if (connected) {
@@ -48,19 +66,21 @@ class _ProfilePageState extends State<ProfilePage> {
           profileInfoElements.addAll(
               [buildUpperZone(profileModel), buildProfileInfo(profileModel)]);
 
-          subredditFeed = subFeed.getMySubreddits();
+          subredditFeed =
+              subFeed.getMySubreddits(faveCallback: updateSubredditList);
 
           print("Supplying profile feed");
 
           finalProfileElements = [];
           finalProfileElements.addAll(profileInfoElements);
           finalProfileElements.addAll(subredditFeed);
-
         });
       }
+      updateSubredditList();
     } else {
       print("Connect yo self");
-      finalProfileElements.add(connectButton());
+      if (finalProfileElements.isEmpty)
+        finalProfileElements.add(connectButton());
     }
   }
 
