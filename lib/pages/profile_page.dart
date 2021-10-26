@@ -30,6 +30,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   void SetProfilePage() async {
     profileElements = [];
+    connected = await RedditInfo.isConnected();
     if (connected) {
       if (infoSet == false) {
         await profileModel.setInfo();
