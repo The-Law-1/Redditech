@@ -10,6 +10,7 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
+  List<Widget> settingsElements = [];
   List<bool> settingsConditions = [true, false, true, true, false, true];
   List<String> settingsString = [
     "One more time",
@@ -36,12 +37,23 @@ class _SettingsPageState extends State<SettingsPage> {
     'Un',
   ];
 
+  bool connected = false;
+
   void querySettingsAPI() async {
     print("Waiting for settings...");
 
-    var result = await RedditInfo.red.get("api/v1/me/prefs");
+    connected = await RedditInfo.isConnected();
+    if (connected) {
+      var result = await RedditInfo.red.get("api/v1/me/prefs");
 
-    print("Prefs result " + result);
+      print("Prefs result " + result);
+      setState(() {
+        settingsElements = [];
+        settingsElements.add(simpleButton(0));
+      });
+    } else {
+      print("Connect yo self");
+    }
   }
   // ! how do we change the settings ?
   // ! I guess .post (data)
@@ -49,14 +61,22 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    print("Reloading settings page");
-
     // todo function: (cf profile page)
     // * if connected, show settings
     // * else show button to log in
+    querySettingsAPI();
 
     return (Scaffold(
+        body: ListView(
+      //padding: EdgeInsets.zero,
+      padding: connected ? EdgeInsets.zero : const EdgeInsets.only(top: 100),
+
+      children: settingsElements,
+    )));
+  
+    /*return (Scaffold(      
         body: ListView.separated(
+      padding: const EdgeInsets.only(top: 70),
       separatorBuilder: (BuildContext context, int index) => const Divider(),
       itemCount: settingsConditions.length,
       itemBuilder: (BuildContext context, int index) {
@@ -86,7 +106,17 @@ class _SettingsPageState extends State<SettingsPage> {
               )),
         );
       },
-    )));
+    )));*/
+  }
+
+  Widget simpleButton(value) {
+    return ListTile(
+      leading: Icon(Icons.remove_red_eye,
+          size: 40, color: value ? Colors.green : Colors.grey),
+      title: Text("button",
+          style: DefaultTextStyle.of(context).style.apply(fontSizeFactor: 2.0)),
+      trailing: buildSwitchButton(Colors.green, Colors.grey, 0),
+    );
   }
 
   //don't work because the val variable don't change when setState
