@@ -20,7 +20,10 @@ class _ProfilePageState extends State<ProfilePage> {
   final double coverHeight = 280; // banner height
   final double profileHeight = 144; // profile pic height
 
-  List<Widget> profileElements = [];
+  List<Widget> finalProfileElements = [];
+  List<Widget> profileInfoElements = [];
+  List<Widget> subredditFeed = [];
+
   ProfileModel profileModel = ProfileModel();
 
   SubredditFeed subFeed = SubredditFeed();
@@ -29,7 +32,6 @@ class _ProfilePageState extends State<ProfilePage> {
   bool infoSet = false;
 
   void SetProfilePage() async {
-    profileElements = [];
     connected = await RedditInfo.isConnected();
     if (connected) {
       if (infoSet == false) {
@@ -43,18 +45,25 @@ class _ProfilePageState extends State<ProfilePage> {
         // add the appropriate widgets
         setState(() {
           infoSet = true;
+
+          profileInfoElements = [];
+          profileInfoElements.addAll(
+              [buildUpperZone(profileModel), buildProfileInfo(profileModel)]);
+
+          subredditFeed = subFeed.getMySubreddits();
+
+          print("Supplying feed");
+
+          finalProfileElements = [];
+          finalProfileElements.addAll(profileInfoElements);
+          finalProfileElements.addAll(subredditFeed);
+
+          print(finalProfileElements.length);
         });
       }
-
-      setState(() {
-        profileElements = [];
-        profileElements.addAll(
-            [buildUpperZone(profileModel), buildProfileInfo(profileModel)]);
-        profileElements.addAll(subFeed.getMySubreddits());
-      });
     } else {
       print("Connect yo self");
-      profileElements.add(connectButton());
+      finalProfileElements.add(connectButton());
     }
   }
 
@@ -68,7 +77,7 @@ class _ProfilePageState extends State<ProfilePage> {
       //padding: EdgeInsets.zero,
       padding: connected ? EdgeInsets.zero : const EdgeInsets.only(top: 100),
 
-      children: profileElements,
+      children: finalProfileElements,
     )));
   }
 
