@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:redditech/model/subreddit_model.dart';
 import '../widgets/feed.dart';
 import '../model/post_model.dart';
+import 'package:fab_circular_menu/fab_circular_menu.dart';
 
 // ! https://www.youtube.com/watch?v=X95-2wES1II&ab_channel=JohannesMilke
 
@@ -28,9 +29,10 @@ class _SubredditPageState extends State<SubredditPage> {
   final double profileHeight = 144; // profile pic height
 
   List<Widget> subredditElements = [];
-
   List<Widget> postsFeed = [];
   String currentPref = "hot";
+
+  List<Widget> finalElements = [];
 
   bool initialized = false;
   PostFeed postFeed = PostFeed();
@@ -39,6 +41,8 @@ class _SubredditPageState extends State<SubredditPage> {
     if (initialized) {
       return;
     }
+    print("Subname " + widget.subredditModel.subredditName);
+
     await postFeed.setInfo(currentPref,
         subredditName: widget.subredditModel.subredditName);
     setState(() {
@@ -53,7 +57,11 @@ class _SubredditPageState extends State<SubredditPage> {
       ]);
 
       postsFeed = postFeed.getFeed();
-      subredditElements.addAll(postsFeed);
+
+      finalElements = [];
+      finalElements.addAll(subredditElements);
+      finalElements.addAll(postsFeed);
+
       initialized = true;
     });
   }
@@ -61,17 +69,17 @@ class _SubredditPageState extends State<SubredditPage> {
   @override
   Widget build(BuildContext context) {
     initialize();
+    //print("Final elements length " + finalElements.length.toString());
 
     return (Scaffold(
-        appBar: AppBar(
-            // Here we take the value from the MyHomePage object that was created by
-            // the App.build method, and use it to set our appbar title.
-            //title: const Text(''),
-            ),
-        body: ListView(
-          padding: EdgeInsets.zero,
-          children: subredditElements,
-        )));
+      appBar: AppBar(
+          // Here we take the value from the MyHomePage object that was created by
+          // the App.build method, and use it to set our appbar title.
+          //title: const Text(''),
+          ),
+      body: ListView(padding: EdgeInsets.zero, children: finalElements),
+      floatingActionButton: filterCircularMenu(),
+    ));
   }
 
   Widget buildSubredditInfo(
@@ -137,4 +145,37 @@ class _SubredditPageState extends State<SubredditPage> {
           fit: BoxFit.cover,
         ),
       );
+
+  void updatePage(String newPref) {
+    setState(() {
+      currentPref = newPref;
+      postsFeed = postFeed.getFeed();
+      finalElements = [];
+      finalElements.addAll(subredditElements);
+      finalElements.addAll(postsFeed);
+    });
+  }
+
+  Widget filterCircularMenu() => FabCircularMenu(
+          fabOpenIcon: const Icon(Icons.filter_list),
+          children: <Widget>[
+            IconButton(
+                icon: const Icon(Icons.fireplace),
+                onPressed: () async {
+                  await postFeed.setInfo("hot");
+                  updatePage("hot");
+                }),
+            IconButton(
+                icon: const Icon(Icons.favorite),
+                onPressed: () async {
+                  await postFeed.setInfo("best");
+                  updatePage("best");
+                }),
+            IconButton(
+                icon: const Icon(Icons.flash_on),
+                onPressed: () async {
+                  await postFeed.setInfo("new");
+                  updatePage("new");
+                }),
+          ]);
 }
