@@ -42,7 +42,6 @@ class SubredditFeed {
       return false;
     }
     var jsonPosts = jsonDecode(postsList);
-    //print("JSON: " + jsonPosts.toString());
     var data = jsonPosts['data'];
     List actualPosts = data['children'];
     //var firstPost = actualPosts[0]["data"];
@@ -68,7 +67,6 @@ class SubredditFeed {
           iconImg, postData['public_description'], subs, headerUrl);
       subreddits.add(newSubreddit);
     }
-    //print("POST 1 : " + firstPost['title']);
     return (true);
   }
 
@@ -87,8 +85,6 @@ class SubredditFeed {
 
     await for (final value in subStream) {
       var jsonVal = jsonDecode(value.toString());
-      print(jsonVal);
-
       String? headerUrl = jsonVal['header_img'];
 
       // if null, assign to ""

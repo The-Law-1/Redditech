@@ -36,10 +36,8 @@ class _ProfilePageState extends State<ProfilePage> {
     if (connected) {
       if (infoSet == false) {
         await profileModel.setInfo();
-        print("Welcome back " + profileModel.userName);
 
         await subFeed.setMyInfo();
-        print("Found my info " + subFeed.subreddits.length.toString());
 
         // remove the loginBtn from the profileElements
         // add the appropriate widgets
@@ -52,13 +50,12 @@ class _ProfilePageState extends State<ProfilePage> {
 
           subredditFeed = subFeed.getMySubreddits();
 
-          print("Supplying feed");
+          print("Supplying profile feed");
 
           finalProfileElements = [];
           finalProfileElements.addAll(profileInfoElements);
           finalProfileElements.addAll(subredditFeed);
 
-          print(finalProfileElements.length);
         });
       }
     } else {

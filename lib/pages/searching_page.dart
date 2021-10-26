@@ -58,7 +58,6 @@ class _SearchingPageState extends State<SearchingPage> {
       width: isPortrait ? 600 : 500,
       debounceDelay: const Duration(milliseconds: 500),
       onSubmitted: (query) async {
-        print("On submitted " + query);
         await subredditFeed.setInfo(query);
         setState(() {
           subredditsFeed = [];

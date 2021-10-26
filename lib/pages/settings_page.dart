@@ -49,6 +49,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    print("Reloading settings page");
 
     // todo function: (cf profile page)
     // * if connected, show settings
@@ -56,38 +57,36 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return (Scaffold(
         body: ListView.separated(
-          separatorBuilder: (BuildContext context, int index) => const Divider(),
-          itemCount: settingsConditions.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              height: 100,
-              child: Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  margin: const EdgeInsets.all(5),
-                  shadowColor: Colors.blueGrey,
-                  elevation: 5,
-                  child: Center(
-                    child: ListTile(
-                        leading: Icon(settingsIcon[index],
-                            size: 40,
-                            color: settingsConditions[index]
-                                ? Colors.green
-                                : Colors.grey),
-                        title: Text(settingsString[index],
-                            style: DefaultTextStyle.of(context)
-                                .style
-                                .apply(fontSizeFactor: 2.0)),
-                        trailing: index < 5
-                            ? buildSwitchButton(Colors.green, Colors.grey, index)
-                            : buildDropdownButton(context, index)),
-                  )
-                ),
-            );
-          },
-        )
-    ));
+      separatorBuilder: (BuildContext context, int index) => const Divider(),
+      itemCount: settingsConditions.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Container(
+          height: 100,
+          child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              margin: const EdgeInsets.all(5),
+              shadowColor: Colors.blueGrey,
+              elevation: 5,
+              child: Center(
+                child: ListTile(
+                    leading: Icon(settingsIcon[index],
+                        size: 40,
+                        color: settingsConditions[index]
+                            ? Colors.green
+                            : Colors.grey),
+                    title: Text(settingsString[index],
+                        style: DefaultTextStyle.of(context)
+                            .style
+                            .apply(fontSizeFactor: 2.0)),
+                    trailing: index < 5
+                        ? buildSwitchButton(Colors.green, Colors.grey, index)
+                        : buildDropdownButton(context, index)),
+              )),
+        );
+      },
+    )));
   }
 
   //don't work because the val variable don't change when setState

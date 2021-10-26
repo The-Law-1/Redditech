@@ -82,7 +82,7 @@ class _HomePageState extends State<HomePage> /* with RedditInfo*/ {
                 icon: const Icon(Icons.flash_on),
                 onPressed: () async {
                   await postFeed.setInfo("new");
-                  print("Filter: NEW " + postFeed.posts[0].postHeader);
+                  //print("Filter: NEW " + postFeed.posts[0].postHeader);
                   setState(() {
                     currentPref = "new";
                     postsFeed = postFeed.getFeed();

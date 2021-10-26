@@ -51,8 +51,6 @@ class PostFeed {
     // json decode
     var jsonPosts = jsonDecode(postsList);
 
-    print(jsonPosts);
-
     var data = jsonPosts["data"];
     List actualPosts = data["children"];
 
@@ -66,7 +64,6 @@ class PostFeed {
         previewImages
             .add(postData["preview"]["images"][0]["source"]["url"].toString());
       } catch (e) {
-        //print("No preview");
       }
 
       String authorName = "";
@@ -85,7 +82,6 @@ class PostFeed {
           postData['selftext']);
 
       posts.add(newPost);
-      //print(actualPosts[i].toString());
     }
 
     return (true);

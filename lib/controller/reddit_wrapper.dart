@@ -10,7 +10,6 @@ class RedditWrapper {
     var response = await http.get(url);
 
     // json in response.body
-    print(response.body);
   }
 
   // ?limit=x to control list length
