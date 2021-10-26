@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'package:draw/draw.dart';
 import 'package:flutter/material.dart';
+import 'package:redditech/controller/reddit_draw.dart';
 import 'package:redditech/controller/search_controller.dart';
 import '../widgets/feed.dart';
 import '../controller/subreddit_controller.dart';
 import '../model/post_model.dart';
+import 'package:draw/src/api_paths.dart';
 
 class SubredditModel {
   late String subredditName = "";
@@ -14,9 +16,11 @@ class SubredditModel {
   late String headerUrl = "";
 
   late List<Post> postFeed;
+  bool isJoined = false;
 
   SubredditModel(this.subredditName, this.subredditImgUrl, this.description,
-      this.subscribers, this.headerUrl);
+      this.subscribers, this.headerUrl,
+      {this.isJoined = false});
 }
 
 class SubredditFeed {
@@ -60,8 +64,8 @@ class SubredditFeed {
 
       subs ??= 0;
 
-      SubredditModel newSubreddit = SubredditModel(postData['display_name'], iconImg,
-          postData['public_description'], subs, headerUrl);
+      SubredditModel newSubreddit = SubredditModel(postData['display_name'],
+          iconImg, postData['public_description'], subs, headerUrl);
       subreddits.add(newSubreddit);
     }
     //print("POST 1 : " + firstPost['title']);
@@ -85,7 +89,6 @@ class SubredditFeed {
       var jsonVal = jsonDecode(value.toString());
       print(jsonVal);
 
-
       String? headerUrl = jsonVal['header_img'];
 
       // if null, assign to ""
@@ -96,7 +99,8 @@ class SubredditFeed {
           jsonVal['icon_img'],
           jsonVal['public_description'],
           jsonVal['subscribers'],
-          headerUrl);
+          headerUrl,
+          isJoined: true);
 
       subreddits.add(newSubModel);
       //print(value.title);
@@ -123,4 +127,39 @@ class SubredditFeed {
     }
     return (subredditWidgets);
   }
+}
+
+Future<void> subscribeToSubreddit(String name) async {
+
+  if (await RedditInfo.isConnected() == false) {
+    return;
+  }
+  final data = {
+    'action': 'sub',
+    'skip_initial_defaults': 'true',
+    'sr_name': name //_subredditList(this, otherSubreddits),
+  };
+
+  void result = await RedditInfo.red
+      .post(apiPath['subscribe'], data, discardResponse: true);
+
+  print("Subscribed to " + name);
+  return (result);
+}
+
+Future<void> unsubscribeToSubreddit(String name) async {
+
+  if (await RedditInfo.isConnected() == false) {
+    return;
+  }
+  final data = {
+    'action': 'unsub',
+    'sr_name': name //_subredditList(this, otherSubreddits),
+  };
+
+  void result = await RedditInfo.red
+      .post(apiPath['subscribe'], data, discardResponse: true);
+
+  print("Unsubbed from " + name);
+  return (result);
 }

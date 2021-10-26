@@ -4,16 +4,15 @@ import 'package:redditech/pages/subreddit_page.dart';
 import '../model/post_model.dart';
 import '../model/subreddit_model.dart';
 
-Widget subredditFeedItem(SubredditModel subreddit, BuildContext context)
-{
+Widget subredditFeedItem(SubredditModel subreddit, BuildContext context) {
   return OutlinedButton(
-   onPressed: () => ExpandSubredditPage(context, subreddit),
-   child: subredditRow(subreddit.subredditImgUrl, subreddit.subredditName)
-  );
+      onPressed: () => ExpandSubredditPage(context, subreddit),
+      child: subredditRow(subreddit.subredditImgUrl, subreddit.subredditName,
+          isFaved: subreddit.isJoined));
 }
 
 // pass bool for subreddit expand possibility ?
-Widget subredditRow(String profileImgUrl, String title) {
+Widget subredditRow(String profileImgUrl, String title, {isFaved = false}) {
   const double profPicDiameter = 44;
 
   Image defaultImage =
@@ -24,27 +23,37 @@ Widget subredditRow(String profileImgUrl, String title) {
     finalImg = Image.network(profileImgUrl);
   }
 
-  return
-    Row(
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8),
-          child: Container(
-              width: profPicDiameter,
-              height: profPicDiameter,
-              child: ClipRRect(
-                  borderRadius: BorderRadius.circular(profPicDiameter / 2),
-                  child: finalImg)),
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Padding(
+        padding: const EdgeInsets.all(8),
+        child: Container(
+            width: profPicDiameter,
+            height: profPicDiameter,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(profPicDiameter / 2),
+                child: finalImg)),
+      ),
+      Text(
+        title,
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
         ),
-        Text(
-          title,
-          style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 16,
-          ),
-        )
-      ],
-    );
+      ),
+      IconButton(
+          onPressed: () async {
+            if (!isFaved) {
+             await subscribeToSubreddit(title);
+
+            } else {
+              await unsubscribeToSubreddit(title);
+            }
+          },
+          icon: Icon(isFaved ? Icons.favorite : Icons.favorite_outline))
+    ],
+  );
 }
 
 // widget for subreddit feed container
