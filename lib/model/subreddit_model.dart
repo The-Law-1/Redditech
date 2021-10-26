@@ -60,7 +60,7 @@ class SubredditFeed {
 
       subs ??= 0;
 
-      SubredditModel newSubreddit = SubredditModel(postData['title'], iconImg,
+      SubredditModel newSubreddit = SubredditModel(postData['display_name'], iconImg,
           postData['public_description'], subs, headerUrl);
       subreddits.add(newSubreddit);
     }
@@ -83,7 +83,8 @@ class SubredditFeed {
 
     await for (final value in subStream) {
       var jsonVal = jsonDecode(value.toString());
-      //print(jsonVal['header_img']);
+      print(jsonVal);
+
 
       String? headerUrl = jsonVal['header_img'];
 
@@ -91,20 +92,11 @@ class SubredditFeed {
       headerUrl ??= "";
 
       SubredditModel newSubModel = SubredditModel(
-          jsonVal['title'],
+          jsonVal['display_name'],
           jsonVal['icon_img'],
           jsonVal['public_description'],
           jsonVal['subscribers'],
           headerUrl);
-
-      if (newSubModel.subredditName.startsWith("r/")) {
-        newSubModel.subredditName =
-            newSubModel.subredditName.replaceFirst("r/", "");
-      }
-      if (newSubModel.subredditName.startsWith("/r/")) {
-        newSubModel.subredditName =
-            newSubModel.subredditName.replaceFirst("/r/", "");
-      }
 
       subreddits.add(newSubModel);
       //print(value.title);
