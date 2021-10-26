@@ -2,18 +2,22 @@ import 'package:draw/draw.dart';
 import 'package:flutter/material.dart';
 import 'package:redditech/model/subreddit_model.dart';
 import '../widgets/feed.dart';
+import '../model/post_model.dart';
 
 // ! https://www.youtube.com/watch?v=X95-2wES1II&ab_channel=JohannesMilke
 
 void ExpandSubredditPage(BuildContext context, SubredditModel subreddit) {
   Navigator.push(
-      context, MaterialPageRoute(builder: (context) => SubredditPage(subredditModel: subreddit)));
+      context,
+      MaterialPageRoute(
+          builder: (context) => SubredditPage(subredditModel: subreddit)));
 }
 
 // takes a subreddit object with
 class SubredditPage extends StatefulWidget {
   final SubredditModel subredditModel;
-  const SubredditPage({Key? key, required this.subredditModel}) : super(key: key);
+  const SubredditPage({Key? key, required this.subredditModel})
+      : super(key: key);
 
   @override
   _SubredditPageState createState() => _SubredditPageState();
@@ -24,31 +28,55 @@ class _SubredditPageState extends State<SubredditPage> {
   final double profileHeight = 144; // profile pic height
 
   List<Widget> subredditElements = [];
-  @override
-  Widget build(BuildContext context) {
-    subredditElements = [];
-    subredditElements.addAll([
-      buildUpperZone(
-          widget.subredditModel.headerUrl,
-          widget.subredditModel.subredditImgUrl),
-      buildSubredditInfo(
-          widget.subredditModel.subredditName, widget.subredditModel.description, widget.subredditModel.subscribers)
-    ]);
-    //subredditElements.addAll(createPostsFeed("Best"));
 
-    return (Scaffold(
-      appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
-        //title: const Text(''),
-      ),
-      body: ListView(
-      padding: EdgeInsets.zero,
-      children: subredditElements,
-    )));
+  List<Widget> postsFeed = [];
+  String currentPref = "hot";
+
+  bool initialized = false;
+  PostFeed postFeed = PostFeed();
+
+  void initialize() async {
+    if (initialized) {
+      return;
+    }
+    await postFeed.setInfo(currentPref,
+        subredditName: widget.subredditModel.subredditName);
+    setState(() {
+      subredditElements = [];
+      subredditElements.addAll([
+        buildUpperZone(widget.subredditModel.headerUrl,
+            widget.subredditModel.subredditImgUrl),
+        buildSubredditInfo(
+            widget.subredditModel.subredditName,
+            widget.subredditModel.description,
+            widget.subredditModel.subscribers)
+      ]);
+
+      postsFeed = postFeed.getFeed();
+      subredditElements.addAll(postsFeed);
+      initialized = true;
+    });
   }
 
-  Widget buildSubredditInfo(String subredditName, String description, int subs) => Column(
+  @override
+  Widget build(BuildContext context) {
+    initialize();
+
+    return (Scaffold(
+        appBar: AppBar(
+            // Here we take the value from the MyHomePage object that was created by
+            // the App.build method, and use it to set our appbar title.
+            //title: const Text(''),
+            ),
+        body: ListView(
+          padding: EdgeInsets.zero,
+          children: subredditElements,
+        )));
+  }
+
+  Widget buildSubredditInfo(
+          String subredditName, String description, int subs) =>
+      Column(
         children: [
           const SizedBox(height: 8),
           Text(

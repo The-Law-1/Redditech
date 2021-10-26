@@ -24,6 +24,15 @@ class RedditWrapper {
     return (response.body);
   }
 
+  static Future<String> GetSubredditPosts(String filter, String subredditName) async
+  {
+    //https://www.reddit.com/r/funny/hot.json
+    var url = Uri.parse('https://www.reddit.com/r/' + subredditName + "/" + filter + '.json');
+
+    var response = await http.get(url);
+    return (response.body);
+  }
+
   static Future<String> GetSubreddits(String filter) async {
     // API endpoint
 

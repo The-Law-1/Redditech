@@ -35,11 +35,17 @@ class PostFeed {
   late List<Post> posts = [];
   late String preference = "hot";
 
-  Future<bool> setInfo(String newPref) async {
+  Future<bool> setInfo(String newPref, {String subredditName = ""}) async {
     posts = [];
     preference = newPref;
 
-    String postsList = await PostController.GetDefaultPosts(newPref);
+    String postsList = "";
+
+    if (subredditName == "") {
+      postsList = await PostController.GetDefaultPosts(newPref);
+    } else {
+      postsList = await PostController.GetSubredditPosts(newPref, subredditName);
+    }
 
     // json decode
     var jsonPosts = jsonDecode(postsList);

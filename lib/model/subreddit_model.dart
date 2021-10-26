@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:redditech/controller/search_controller.dart';
 import '../widgets/feed.dart';
 import '../controller/subreddit_controller.dart';
+import '../model/post_model.dart';
 
 class SubredditModel {
   late String subredditName = "";
@@ -11,6 +12,8 @@ class SubredditModel {
   late String description = "";
   late int subscribers = 0;
   late String headerUrl = "";
+
+  late List<Post> postFeed;
 
   SubredditModel(this.subredditName, this.subredditImgUrl, this.description,
       this.subscribers, this.headerUrl);
