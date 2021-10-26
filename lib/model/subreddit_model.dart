@@ -142,7 +142,7 @@ Future<void> subscribeToSubreddit(String name) async {
   return (result);
 }
 
-Future<void> unsubscribeToSubreddit(String name) async {
+Future<void> unsubscribeFromSubreddit(String name) async {
   if (await RedditInfo.isConnected() == false) {
     return;
   }

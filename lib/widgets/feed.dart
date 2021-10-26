@@ -27,36 +27,42 @@ Widget subredditRow(String profileImgUrl, String title,
     finalImg = Image.network(profileImgUrl);
   }
 
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Padding(
-        padding: const EdgeInsets.all(8),
-        child: Container(
-            width: profPicDiameter,
-            height: profPicDiameter,
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(profPicDiameter / 2),
-                child: finalImg)),
+  List<Widget> rowChildren = [
+    Padding(
+      padding: const EdgeInsets.all(8),
+      child: Container(
+          width: profPicDiameter,
+          height: profPicDiameter,
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(profPicDiameter / 2),
+              child: finalImg)),
+    ),
+    Text(
+      title,
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 16,
       ),
-      Text(
-        title,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-        ),
-      ),
-      IconButton(
+    ),
+  ];
+
+  if (isFaved) {
+    rowChildren.add(IconButton(
           onPressed: () async {
             if (!isFaved) {
               await subscribeToSubreddit(title);
             } else {
-              await unsubscribeToSubreddit(title);
+              await unsubscribeFromSubreddit(title);
             }
             faveCallback();
           },
-          icon: Icon(isFaved ? Icons.favorite : Icons.favorite_outline))
-    ],
+          icon: const Icon(Icons.favorite))
+      );
+  }
+
+  return Row(
+    mainAxisAlignment: isFaved ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
+    children: rowChildren,
   );
 }
 
