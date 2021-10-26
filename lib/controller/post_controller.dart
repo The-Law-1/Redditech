@@ -7,7 +7,8 @@ class PostController {
     return (await RedditWrapper.GetDefaultPosts(filter));
   }
 
-  static Future<String> GetSubredditPosts(String filter, String subredditName) async {
-    return (await RedditWrapper.GetSubredditPosts(filter, subredditName));
+  static Future<String> getSubredditPosts(
+      String filter, String subredditName) async {
+    return (await RedditWrapper.getSubredditPosts(filter, subredditName));
   }
 }

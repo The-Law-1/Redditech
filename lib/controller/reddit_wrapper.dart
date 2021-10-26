@@ -23,11 +23,16 @@ class RedditWrapper {
     return (response.body);
   }
 
-  static Future<String> GetSubredditPosts(
+  static Future<String> getSubredditPosts(
       String filter, String subredditName) async {
     // if there is a space in the subname, replace with '+'
     subredditName = subredditName.replaceAll(' ', '+');
-    print("Requesting sub " + subredditName);
+    print("Full uri " +
+        'https://www.reddit.com/r/' +
+        subredditName +
+        "/" +
+        filter +
+        '.json');
     //https://www.reddit.com/r/funny/hot.json
     var url = Uri.parse(
         'https://www.reddit.com/r/' + subredditName + "/" + filter + '.json');

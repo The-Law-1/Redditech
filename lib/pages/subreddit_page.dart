@@ -133,18 +133,25 @@ class _SubredditPageState extends State<SubredditPage> {
   Widget buildSubredditImage(String imgUrl) => CircleAvatar(
       radius: profileHeight / 2,
       backgroundColor: Colors.grey.shade800,
-      backgroundImage: NetworkImage(imgUrl));
+      backgroundImage: NetworkImage(imgUrl != ""
+          ? imgUrl
+          : "https://www.reddit.com/static/self_default2.png"));
 
-  Widget buildCoverImage(String imgUrl) => Container(
-        color: Colors.grey,
-        // replace .network with .asset probably ??
-        child: Image.network(
-          imgUrl,
-          width: double.infinity,
-          height: coverHeight,
-          fit: BoxFit.cover,
-        ),
-      );
+  Widget buildCoverImage(String imgUrl) {
+    // ! also check if it returns nothing ??
+    return Container(
+      color: Colors.grey,
+      // replace .network with .asset probably ??
+      child: Image.network(
+        imgUrl != ""
+            ? imgUrl
+            : "https://somegadgetguy.com/wp-content/uploads/2014/03/reddit-banner.jpg",
+        width: double.infinity,
+        height: coverHeight,
+        fit: BoxFit.cover,
+      ),
+    );
+  }
 
   void updatePage(String newPref) {
     setState(() {
@@ -162,19 +169,22 @@ class _SubredditPageState extends State<SubredditPage> {
             IconButton(
                 icon: const Icon(Icons.fireplace),
                 onPressed: () async {
-                  await postFeed.setInfo("hot");
+                  await postFeed.setInfo("hot",
+                      subredditName: widget.subredditModel.subredditName);
                   updatePage("hot");
                 }),
             IconButton(
                 icon: const Icon(Icons.favorite),
                 onPressed: () async {
-                  await postFeed.setInfo("best");
+                  await postFeed.setInfo("best",
+                      subredditName: widget.subredditModel.subredditName);
                   updatePage("best");
                 }),
             IconButton(
                 icon: const Icon(Icons.flash_on),
                 onPressed: () async {
-                  await postFeed.setInfo("new");
+                  await postFeed.setInfo("new",
+                      subredditName: widget.subredditModel.subredditName);
                   updatePage("new");
                 }),
           ]);

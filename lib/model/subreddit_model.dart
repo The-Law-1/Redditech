@@ -97,6 +97,15 @@ class SubredditFeed {
           jsonVal['subscribers'],
           headerUrl);
 
+      if (newSubModel.subredditName.startsWith("r/")) {
+        newSubModel.subredditName =
+            newSubModel.subredditName.replaceFirst("r/", "");
+      }
+      if (newSubModel.subredditName.startsWith("/r/")) {
+        newSubModel.subredditName =
+            newSubModel.subredditName.replaceFirst("/r/", "");
+      }
+
       subreddits.add(newSubModel);
       //print(value.title);
     }
