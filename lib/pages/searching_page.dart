@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:redditech/controller/reddit_draw.dart';
 import 'package:redditech/model/subreddit_model.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
+import 'package:redditech/widgets/feed.dart';
 
 class SearchingPage extends StatefulWidget {
   const SearchingPage({Key? key}) : super(key: key);
@@ -15,15 +17,20 @@ class _SearchingPageState extends State<SearchingPage> {
   bool initialized = false;
 
   void Initialize(BuildContext context) async {
-    if (initialized) {
+    if (!globalUpdateSearchPage) {
       return;
+    } else {
+      print("starting setInfo");
+
+      await subredditFeed.setInfo("reddit");
+      setState(() {
+        print("Finished setInfo");
+        subredditsFeed = [];
+        subredditsFeed = subredditFeed.getFeed();
+        //initialized = true;
+        globalUpdateSearchPage = false;
+      });
     }
-    await subredditFeed.setInfo("reddit");
-    setState(() {
-      subredditsFeed = [];
-      subredditsFeed = subredditFeed.getFeed();
-      initialized = true;
-    });
   }
 
   @override
@@ -58,7 +65,6 @@ class _SearchingPageState extends State<SearchingPage> {
       width: isPortrait ? 600 : 500,
       debounceDelay: const Duration(milliseconds: 500),
       onSubmitted: (query) async {
-        print("On submitted " + query);
         await subredditFeed.setInfo(query);
         setState(() {
           subredditsFeed = [];

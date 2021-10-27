@@ -1,5 +1,6 @@
 import 'package:draw/draw.dart';
 import 'package:flutter/material.dart';
+import 'package:redditech/controller/reddit_draw.dart';
 import 'package:redditech/model/subreddit_model.dart';
 import '../widgets/feed.dart';
 import '../model/post_model.dart';
@@ -37,6 +38,21 @@ class _SubredditPageState extends State<SubredditPage> {
   bool initialized = false;
   PostFeed postFeed = PostFeed();
 
+  void updateSubredditInfo() {
+    setState(() {
+      subredditElements = [];
+      subredditElements.addAll([
+        buildUpperZone(widget.subredditModel.headerUrl,
+            widget.subredditModel.subredditImgUrl),
+        buildSubredditInfo(widget.subredditModel)
+      ]);
+
+      finalElements = [];
+      finalElements.addAll(subredditElements);
+      finalElements.addAll(postsFeed);
+    });
+  }
+
   void initialize() async {
     if (initialized) {
       return;
@@ -50,10 +66,7 @@ class _SubredditPageState extends State<SubredditPage> {
       subredditElements.addAll([
         buildUpperZone(widget.subredditModel.headerUrl,
             widget.subredditModel.subredditImgUrl),
-        buildSubredditInfo(
-            widget.subredditModel.subredditName,
-            widget.subredditModel.description,
-            widget.subredditModel.subscribers)
+        buildSubredditInfo(widget.subredditModel)
       ]);
 
       postsFeed = postFeed.getFeed();
@@ -82,31 +95,54 @@ class _SubredditPageState extends State<SubredditPage> {
     ));
   }
 
-  Widget buildSubredditInfo(
-          String subredditName, String description, int subs) =>
-      Column(
-        children: [
-          const SizedBox(height: 8),
-          Text(
-            subredditName,
-            style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+  Widget buildSubredditInfo(SubredditModel subredditModel) {
+    return Column(
+      children: [
+        const SizedBox(height: 8),
+        Text(
+          subredditModel.subredditName,
+          style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          subredditModel.description,
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 20, color: Colors.black),
+        ),
+        Padding(
+          padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+          child: Row(
+            children: [
+              Text(
+                "Subscribers: " + subredditModel.subscribers.toString(),
+                textAlign: TextAlign.right,
+                style: const TextStyle(fontSize: 20, color: Colors.black),
+              ),
+              IconButton(
+                  onPressed: () async {
+                    if (await RedditInfo.isConnected() == false) {
+                      return;
+                    }
+                    if (!subredditModel.isJoined) {
+                      await subscribeToSubreddit(subredditModel.subredditName);
+                    } else {
+                      await unsubscribeFromSubreddit(
+                          subredditModel.subredditName);
+                    }
+                    // ! doesn't update visually ?!
+                    // ! also cross reference with joined subs
+                    subredditModel.isJoined = !subredditModel.isJoined;
+                    updateSubredditInfo();
+                  },
+                  icon: Icon(subredditModel.isJoined
+                      ? Icons.favorite
+                      : Icons.favorite_outline))
+            ],
           ),
-          const SizedBox(height: 8),
-          Text(
-            description,
-            textAlign: TextAlign.center,
-            style: const TextStyle(fontSize: 20, color: Colors.black),
-          ),
-          Padding(
-            padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
-            child: Text(
-              "Subscribers: " + subs.toString(),
-              textAlign: TextAlign.right,
-              style: const TextStyle(fontSize: 20, color: Colors.black),
-            ),
-          )
-        ],
-      );
+        )
+      ],
+    );
+  }
 
   Widget buildUpperZone(String imageUrl, String bannerUrl) {
     final bottomOffset = profileHeight / 2; // offset for text

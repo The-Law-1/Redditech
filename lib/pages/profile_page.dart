@@ -20,7 +20,10 @@ class _ProfilePageState extends State<ProfilePage> {
   final double coverHeight = 280; // banner height
   final double profileHeight = 144; // profile pic height
 
-  List<Widget> profileElements = [];
+  List<Widget> finalProfileElements = [];
+  List<Widget> profileInfoElements = [];
+  List<Widget> subredditFeed = [];
+
   ProfileModel profileModel = ProfileModel();
 
   SubredditFeed subFeed = SubredditFeed();
@@ -28,32 +31,58 @@ class _ProfilePageState extends State<ProfilePage> {
   bool connected = false;
   bool infoSet = false;
 
+  void updateSubredditList() async {
+    await subFeed.setMyInfo();
+    List<Widget> newSubredditFeed =
+        subFeed.getMySubreddits(faveCallback: updateSubredditList);
+
+    if (newSubredditFeed.length != subredditFeed.length) {
+      setState(() {
+        subredditFeed = newSubredditFeed;
+        print("Updating profile subreddit feed");
+
+        globalUpdateSearchPage = true;
+
+        finalProfileElements = [];
+        finalProfileElements.addAll(profileInfoElements);
+        finalProfileElements.addAll(subredditFeed);
+      });
+    }
+  }
+
   void SetProfilePage() async {
-    profileElements = [];
+    connected = await RedditInfo.isConnected();
     if (connected) {
       if (infoSet == false) {
         await profileModel.setInfo();
-        print("Welcome back " + profileModel.userName);
 
         await subFeed.setMyInfo();
-        print("Found my info " + subFeed.subreddits.length.toString());
 
         // remove the loginBtn from the profileElements
         // add the appropriate widgets
         setState(() {
           infoSet = true;
+
+          profileInfoElements = [];
+          profileInfoElements.addAll(
+              [buildUpperZone(profileModel), buildProfileInfo(profileModel)]);
+
+          subredditFeed =
+              subFeed.getMySubreddits(faveCallback: updateSubredditList);
+
+          print("Supplying profile feed");
+          globalUpdateSearchPage = true;
+
+          finalProfileElements = [];
+          finalProfileElements.addAll(profileInfoElements);
+          finalProfileElements.addAll(subredditFeed);
         });
       }
-
-      setState(() {
-        profileElements = [];
-        profileElements.addAll(
-            [buildUpperZone(profileModel), buildProfileInfo(profileModel)]);
-        profileElements.addAll(subFeed.getMySubreddits());
-      });
+      updateSubredditList();
     } else {
       print("Connect yo self");
-      profileElements.add(connectButton());
+      if (finalProfileElements.isEmpty)
+        finalProfileElements.add(connectButton());
     }
   }
 
@@ -67,7 +96,7 @@ class _ProfilePageState extends State<ProfilePage> {
       //padding: EdgeInsets.zero,
       padding: connected ? EdgeInsets.zero : const EdgeInsets.only(top: 100),
 
-      children: profileElements,
+      children: finalProfileElements,
     )));
   }
 

@@ -44,10 +44,21 @@ class _HomePageState extends State<HomePage> /* with RedditInfo*/ {
         // the App.build method, and use it to set our appbar title.
         title: const Text('Home'),
       ),
-      body: ListView(
+      body: ListView.separated(
+        itemCount: postsFeed.length,
+        itemBuilder: (context, index) {
+          return postsFeed[index];
+        },
+        separatorBuilder: (context, index) {
+          return Divider(
+            color: Colors.red[200],
+            thickness: 1,
+            indent: 100,
+            endIndent: 100,
+          );
+        },
         padding: EdgeInsets.zero,
-        children: postsFeed,
-        // tabs for HOT/BEST/NEW
+      // tabs for HOT/BEST/NEW
       ),
       floatingActionButton: filterCircularMenu(),
       //child: ListView(padding: EdgeInsets.zero, children: postsFeed),
@@ -82,7 +93,7 @@ class _HomePageState extends State<HomePage> /* with RedditInfo*/ {
                 icon: const Icon(Icons.flash_on),
                 onPressed: () async {
                   await postFeed.setInfo("new");
-                  print("Filter: NEW " + postFeed.posts[0].postHeader);
+                  //print("Filter: NEW " + postFeed.posts[0].postHeader);
                   setState(() {
                     currentPref = "new";
                     postsFeed = postFeed.getFeed();

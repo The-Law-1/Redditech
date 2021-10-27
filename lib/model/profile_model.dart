@@ -17,8 +17,6 @@ class ProfileModel {
     if (rawInfo != null) {
       var rawJSON = jsonDecode(rawInfo.toString());
 
-      print("subreddits property " + rawJSON['subreddit'].toString());
-
       userName = rawJSON['subreddit']['title'];
 
       if (userName == "") {

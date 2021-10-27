@@ -4,15 +4,21 @@ import 'package:redditech/pages/subreddit_page.dart';
 import '../model/post_model.dart';
 import '../model/subreddit_model.dart';
 
-Widget subredditFeedItem(SubredditModel subreddit, BuildContext context) {
+bool globalUpdateSearchPage = true;
+
+Widget subredditFeedItem(SubredditModel subreddit, BuildContext context,
+    {VoidCallback faveCallback = defaultCallback}) {
   return OutlinedButton(
       onPressed: () => ExpandSubredditPage(context, subreddit),
       child: subredditRow(subreddit.subredditImgUrl, subreddit.subredditName,
-          isFaved: subreddit.isJoined));
+          isFaved: subreddit.isJoined, faveCallback: faveCallback));
 }
 
+void defaultCallback() {}
+
 // pass bool for subreddit expand possibility ?
-Widget subredditRow(String profileImgUrl, String title, {isFaved = false}) {
+Widget subredditRow(String profileImgUrl, String title,
+    {isFaved = false, VoidCallback faveCallback = defaultCallback}) {
   const double profPicDiameter = 44;
 
   Image defaultImage =
@@ -23,36 +29,42 @@ Widget subredditRow(String profileImgUrl, String title, {isFaved = false}) {
     finalImg = Image.network(profileImgUrl);
   }
 
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Padding(
-        padding: const EdgeInsets.all(8),
-        child: Container(
-            width: profPicDiameter,
-            height: profPicDiameter,
-            child: ClipRRect(
-                borderRadius: BorderRadius.circular(profPicDiameter / 2),
-                child: finalImg)),
+  List<Widget> rowChildren = [
+    Padding(
+      padding: const EdgeInsets.all(8),
+      child: Container(
+          width: profPicDiameter,
+          height: profPicDiameter,
+          child: ClipRRect(
+              borderRadius: BorderRadius.circular(profPicDiameter / 2),
+              child: finalImg)),
+    ),
+    Text(
+      title,
+      style: const TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 12,
       ),
-      Text(
-        title,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-        ),
-      ),
-      IconButton(
-          onPressed: () async {
-            if (!isFaved) {
-             await subscribeToSubreddit(title);
+    ),
+  ];
 
-            } else {
-              await unsubscribeToSubreddit(title);
-            }
-          },
-          icon: Icon(isFaved ? Icons.favorite : Icons.favorite_outline))
-    ],
+  if (isFaved) {
+    rowChildren.add(IconButton(
+        onPressed: () async {
+          if (!isFaved) {
+            await subscribeToSubreddit(title);
+          } else {
+            await unsubscribeFromSubreddit(title);
+          }
+          faveCallback();
+        },
+        icon: const Icon(Icons.favorite)));
+  }
+
+  return Row(
+    mainAxisAlignment:
+        isFaved ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
+    children: rowChildren,
   );
 }
 
@@ -119,6 +131,18 @@ List<Widget> buildPostFeedContainer(
   return ([
     subredditRow(profileImageUrl, author),
     Text(postHeader,
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32))
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 22,
+        )
+    )
   ]);
+  /*return ([ListTile(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+    contentPadding: const EdgeInsets.all(8.0),
+      tileColor: Colors.grey[200],
+    leading: subredditRow(profileImageUrl, author),
+    title: Text(postHeader,
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22))
+  )]);*/
 }

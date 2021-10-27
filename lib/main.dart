@@ -41,8 +41,8 @@ class _MyHomePageState extends State<MyHomePage> {
   int currentIndex = 0;
   String queryResult = "";
 
-  final screens = [
-    const HomePage(), //SubredditPage(), //PostPage(),
+  final List<StatefulWidget> screens = [
+    const HomePage(),
     const SearchingPage(),
     const SettingsPage(),
     const ProfilePage(),
@@ -71,7 +71,18 @@ class _MyHomePageState extends State<MyHomePage> {
             showUnselectedLabels: false,
             currentIndex: currentIndex,
             onTap: (index) {
-              setState(() => currentIndex = index);
+              setState(() {
+                currentIndex = index;
+                if (currentIndex == 1) {
+                  screens[currentIndex] = SearchingPage();
+                }
+                if (currentIndex == 2) {
+                  screens[currentIndex] = SettingsPage();
+                }
+                if (currentIndex == 3) {
+                  screens[currentIndex] = ProfilePage();
+                }
+              });
             },
             items: const [
               BottomNavigationBarItem(

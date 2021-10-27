@@ -32,43 +32,18 @@ class SubredditFeed {
   }
 
   Future<bool> setInfo(String query) async {
-    subreddits = [];
+    bool connected = await RedditInfo.isConnected();
 
-    String postsList = await SearchController.GetSubreddits(query);
-    String iconImg = "";
-
-    print("QUERY: " + query);
-    if (postsList == "") {
-      return false;
+    if (connected) {
+      await setMyInfo();
     }
-    var jsonPosts = jsonDecode(postsList);
-    //print("JSON: " + jsonPosts.toString());
-    var data = jsonPosts['data'];
-    List actualPosts = data['children'];
-    //var firstPost = actualPosts[0]["data"];
 
-    for (var i = 0; i < actualPosts.length; i++) {
-      var postData = actualPosts[i]['data'];
-
-      String? headerUrl = postData['header_img'];
-
-      // if null, assign to ""
-      headerUrl ??= "";
-
-      if (postData['icon_img'] == null) {
-        iconImg = "";
-      } else {
-        iconImg = postData['icon_img'];
-      }
-      int? subs = postData['subscribers'];
-
-      subs ??= 0;
-
-      SubredditModel newSubreddit = SubredditModel(postData['display_name'],
-          iconImg, postData['public_description'], subs, headerUrl);
-      subreddits.add(newSubreddit);
+    List<SubredditModel> subredditList = await SubredditController.SearchSubreddits(subreddits, query);
+    if (subredditList.isEmpty) {
+      return (false);
     }
-    //print("POST 1 : " + firstPost['title']);
+    // needs copy ?
+    subreddits = subredditList;
     return (true);
   }
 
@@ -81,14 +56,11 @@ class SubredditFeed {
     return (postWidgets);
   }
 
-  Future<List<SubredditModel>> getSubredditsFromStream(
-      Stream<Subreddit> subStream) async {
+  Future<List<SubredditModel>> getSubredditsFromStream(Stream<Subreddit> subStream) async {
     subreddits = [];
 
     await for (final value in subStream) {
       var jsonVal = jsonDecode(value.toString());
-      print(jsonVal);
-
       String? headerUrl = jsonVal['header_img'];
 
       // if null, assign to ""
@@ -113,24 +85,21 @@ class SubredditFeed {
     Stream<Subreddit> subredditStream = SubredditController.GetData();
 
     await getSubredditsFromStream(subredditStream);
-
-    //print("subreddits property " + rawJSON['subreddit'].toString());
-
     return (true);
   }
 
-  List<Widget> getMySubreddits() {
+  List<Widget> getMySubreddits({VoidCallback faveCallback = defaultCallback}) {
     List<Widget> subredditWidgets = [];
 
     for (var i = 0; i < subreddits.length; i++) {
-      subredditWidgets.add(subredditFeedItem(subreddits[i], context));
+      subredditWidgets.add(subredditFeedItem(subreddits[i], context,
+          faveCallback: faveCallback));
     }
     return (subredditWidgets);
   }
 }
 
 Future<void> subscribeToSubreddit(String name) async {
-
   if (await RedditInfo.isConnected() == false) {
     return;
   }
@@ -144,11 +113,11 @@ Future<void> subscribeToSubreddit(String name) async {
       .post(apiPath['subscribe'], data, discardResponse: true);
 
   print("Subscribed to " + name);
+  globalUpdateSearchPage = true;
   return (result);
 }
 
-Future<void> unsubscribeToSubreddit(String name) async {
-
+Future<void> unsubscribeFromSubreddit(String name) async {
   if (await RedditInfo.isConnected() == false) {
     return;
   }
@@ -160,6 +129,7 @@ Future<void> unsubscribeToSubreddit(String name) async {
   void result = await RedditInfo.red
       .post(apiPath['subscribe'], data, discardResponse: true);
 
+  globalUpdateSearchPage = true;
   print("Unsubbed from " + name);
   return (result);
 }

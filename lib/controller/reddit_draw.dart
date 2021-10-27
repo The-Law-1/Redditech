@@ -26,7 +26,7 @@ class RedditInfo {
   );
 
   static void sayHi() {
-    print("Hi");
+
   }
 
   static Future<String> _connectToReddit(red) async {
