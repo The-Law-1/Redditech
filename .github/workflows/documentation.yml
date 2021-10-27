@@ -1,0 +1,46 @@
+name: documentation
+
+on:
+  push:
+    branches:
+      - "*"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          flutter-version: '2.5.2'
+      - run: flutter pub get
+
+      - name: Build documentation
+        uses: actions/checkout@v2
+      - run: flutter pub global activate dartdoc
+      - run: flutter pub run dartdoc
+      - name: Push documentation
+      - run: cd doc/api &&
+          git config --global user.email "62939585+The-Law-1@users.noreply.github.com" &&
+          git config --global user.name "The_Law" &&
+          git init &&
+          git add -A &&
+          git commit -m "dartdoc action" &&
+          git remote add origin https://The-Law-1:${{ secrets.GITHUB_TOKEN }}@github.com/The-Law-1/B-DEV-501-NAN-5-1-redditech-gabriel.griffin &&
+          git checkout -b dartdoc &&
+          git push --force origin dartdoc
+
+      # ! can you make a github pages with the doc ?
+      # - name: create artifact
+      #   run: mkdir artifact && cp build/app/outputs/flutter-apk/app-release.apk artifact
+      # - name: upload artifact
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: android-build
+      #     path: artifact
