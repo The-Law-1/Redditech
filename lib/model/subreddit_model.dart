@@ -31,16 +31,6 @@ class SubredditFeed {
     context = ctx;
   }
 
-  bool mySubsContainsName(String subName) {
-    for (var i = 0; i < subreddits.length; i++) {
-      if (subreddits[i].subredditName == subName) {
-        print("You are subscribed to " + subName);
-        return (true);
-      }
-    }
-    return (false);
-  }
-
   Future<bool> setInfo(String query) async {
     bool connected = await RedditInfo.isConnected();
 
@@ -66,8 +56,7 @@ class SubredditFeed {
     return (postWidgets);
   }
 
-  Future<List<SubredditModel>> getSubredditsFromStream(
-      Stream<Subreddit> subStream) async {
+  Future<List<SubredditModel>> getSubredditsFromStream(Stream<Subreddit> subStream) async {
     subreddits = [];
 
     await for (final value in subStream) {
@@ -96,9 +85,6 @@ class SubredditFeed {
     Stream<Subreddit> subredditStream = SubredditController.GetData();
 
     await getSubredditsFromStream(subredditStream);
-
-    //print("subreddits property " + rawJSON['subreddit'].toString());
-
     return (true);
   }
 

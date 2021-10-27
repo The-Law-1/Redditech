@@ -41,7 +41,7 @@ class PostFeed {
     posts = [];
     preference = newPref;
 
-    String postsList = "";
+    List<dynamic> postsList = [];
 
     if (subredditName == "") {
       postsList = await PostController.GetDefaultPosts(newPref);
@@ -50,42 +50,21 @@ class PostFeed {
           await PostController.getSubredditPosts(newPref, subredditName);
     }
 
-    // json decode
-    var jsonPosts = jsonDecode(postsList);
+    for (var post in postsList) {
+      //print("New post item " + post["data"]["preview_images"].toString());
 
-    var data = jsonPosts["data"];
-    List actualPosts = data["children"];
-
-    for (var i = 0; i < actualPosts.length; i++) {
-      var postData = actualPosts[i]["data"];
-      List<String> previewImages = [];
-
-      try {
-        // ! there can be more than one source, check in "variants" object of images
-        //print(postData["preview"]["images"][0]["source"]["url"].toString());
-        previewImages
-            .add(postData["preview"]["images"][0]["source"]["url"].toString());
-      } catch (e) {
-      }
-
-      String authorName = "";
-      try {
-        authorName = postData['author_fullname'];
-      } catch (e) {
-        authorName = "";
-      }
+      var postData = post["data"];
 
       Post newPost = Post(
           postData['subreddit'],
-          authorName,
+          postData["author_fullname"],
           postData['thumbnail'],
           postData['title'],
-          previewImages,
+          postData["preview_images"],
           postData['selftext']);
 
       posts.add(newPost);
     }
-
     return (true);
   }
 
