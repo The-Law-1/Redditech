@@ -39,8 +39,9 @@ class _ProfilePageState extends State<ProfilePage> {
     if (newSubredditFeed.length != subredditFeed.length) {
       setState(() {
         subredditFeed = newSubredditFeed;
-
         print("Updating profile subreddit feed");
+
+        globalUpdateSearchPage = true;
 
         finalProfileElements = [];
         finalProfileElements.addAll(profileInfoElements);
@@ -70,6 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
               subFeed.getMySubreddits(faveCallback: updateSubredditList);
 
           print("Supplying profile feed");
+          globalUpdateSearchPage = true;
 
           finalProfileElements = [];
           finalProfileElements.addAll(profileInfoElements);

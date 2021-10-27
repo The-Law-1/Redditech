@@ -31,8 +31,24 @@ class SubredditFeed {
     context = ctx;
   }
 
+  bool mySubsContainsName(String subName) {
+    for (var i = 0; i < subreddits.length; i++) {
+      if (subreddits[i].subredditName == subName) {
+        print("You are subscribed to " + subName);
+        return (true);
+      }
+    }
+    return (false);
+  }
+
   Future<bool> setInfo(String query) async {
-    subreddits = [];
+    bool connected = await RedditInfo.isConnected();
+
+    if (connected) {
+      await setMyInfo();
+    }
+
+    List<SubredditModel> subredditList = [];
 
     String postsList = await SearchController.GetSubreddits(query);
     String iconImg = "";
@@ -63,10 +79,18 @@ class SubredditFeed {
 
       subs ??= 0;
 
+      bool joined = false;
+      if (connected) {
+        joined = mySubsContainsName(postData['display_name']);
+      }
+
       SubredditModel newSubreddit = SubredditModel(postData['display_name'],
-          iconImg, postData['public_description'], subs, headerUrl);
-      subreddits.add(newSubreddit);
+          iconImg, postData['public_description'], subs, headerUrl,
+          isJoined: joined);
+      subredditList.add(newSubreddit);
     }
+    // needs copy ?
+    subreddits = subredditList;
     return (true);
   }
 
@@ -119,7 +143,8 @@ class SubredditFeed {
     List<Widget> subredditWidgets = [];
 
     for (var i = 0; i < subreddits.length; i++) {
-      subredditWidgets.add(subredditFeedItem(subreddits[i], context, faveCallback:faveCallback));
+      subredditWidgets.add(subredditFeedItem(subreddits[i], context,
+          faveCallback: faveCallback));
     }
     return (subredditWidgets);
   }
@@ -139,6 +164,7 @@ Future<void> subscribeToSubreddit(String name) async {
       .post(apiPath['subscribe'], data, discardResponse: true);
 
   print("Subscribed to " + name);
+  globalUpdateSearchPage = true;
   return (result);
 }
 
@@ -154,6 +180,7 @@ Future<void> unsubscribeFromSubreddit(String name) async {
   void result = await RedditInfo.red
       .post(apiPath['subscribe'], data, discardResponse: true);
 
+  globalUpdateSearchPage = true;
   print("Unsubbed from " + name);
   return (result);
 }

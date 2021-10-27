@@ -4,6 +4,8 @@ import 'package:redditech/pages/subreddit_page.dart';
 import '../model/post_model.dart';
 import '../model/subreddit_model.dart';
 
+bool globalUpdateSearchPage = true;
+
 Widget subredditFeedItem(SubredditModel subreddit, BuildContext context,
     {VoidCallback faveCallback = defaultCallback}) {
   return OutlinedButton(
@@ -48,20 +50,20 @@ Widget subredditRow(String profileImgUrl, String title,
 
   if (isFaved) {
     rowChildren.add(IconButton(
-          onPressed: () async {
-            if (!isFaved) {
-              await subscribeToSubreddit(title);
-            } else {
-              await unsubscribeFromSubreddit(title);
-            }
-            faveCallback();
-          },
-          icon: const Icon(Icons.favorite))
-      );
+        onPressed: () async {
+          if (!isFaved) {
+            await subscribeToSubreddit(title);
+          } else {
+            await unsubscribeFromSubreddit(title);
+          }
+          faveCallback();
+        },
+        icon: const Icon(Icons.favorite)));
   }
 
   return Row(
-    mainAxisAlignment: isFaved ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
+    mainAxisAlignment:
+        isFaved ? MainAxisAlignment.spaceBetween : MainAxisAlignment.start,
     children: rowChildren,
   );
 }

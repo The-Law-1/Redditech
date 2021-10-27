@@ -5,6 +5,8 @@ import 'package:redditech/controller/post_controller.dart';
 import '../controller/profile_controller.dart';
 import '../widgets/feed.dart';
 
+// ! move logic to controller
+
 // post modelclass
 class Post {
   late String subredditName = "";

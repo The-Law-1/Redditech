@@ -1,5 +1,6 @@
 import 'package:draw/draw.dart';
 import 'package:flutter/material.dart';
+import 'package:redditech/controller/reddit_draw.dart';
 import 'package:redditech/model/subreddit_model.dart';
 import '../widgets/feed.dart';
 import '../model/post_model.dart';
@@ -36,6 +37,21 @@ class _SubredditPageState extends State<SubredditPage> {
 
   bool initialized = false;
   PostFeed postFeed = PostFeed();
+
+  void updateSubredditInfo() {
+    setState(() {
+      subredditElements = [];
+      subredditElements.addAll([
+        buildUpperZone(widget.subredditModel.headerUrl,
+            widget.subredditModel.subredditImgUrl),
+        buildSubredditInfo(widget.subredditModel)
+      ]);
+
+      finalElements = [];
+      finalElements.addAll(subredditElements);
+      finalElements.addAll(postsFeed);
+    });
+  }
 
   void initialize() async {
     if (initialized) {
@@ -104,19 +120,23 @@ class _SubredditPageState extends State<SubredditPage> {
               ),
               IconButton(
                   onPressed: () async {
+                    if (await RedditInfo.isConnected() == false) {
+                      return;
+                    }
                     if (!subredditModel.isJoined) {
                       await subscribeToSubreddit(subredditModel.subredditName);
                     } else {
                       await unsubscribeFromSubreddit(
                           subredditModel.subredditName);
                     }
-                    setState(() {
-                      // ! doesn't update visually ?!
-                      // ! also cross reference with joined subs
-                      subredditModel.isJoined = !subredditModel.isJoined;
-                    });
+                    // ! doesn't update visually ?!
+                    // ! also cross reference with joined subs
+                    subredditModel.isJoined = !subredditModel.isJoined;
+                    updateSubredditInfo();
                   },
-                  icon: Icon(subredditModel.isJoined ? Icons.favorite : Icons.favorite_outline))
+                  icon: Icon(subredditModel.isJoined
+                      ? Icons.favorite
+                      : Icons.favorite_outline))
             ],
           ),
         )

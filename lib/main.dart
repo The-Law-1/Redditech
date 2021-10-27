@@ -73,6 +73,9 @@ class _MyHomePageState extends State<MyHomePage> {
             onTap: (index) {
               setState(() {
                 currentIndex = index;
+                if (currentIndex == 1) {
+                  screens[currentIndex] = SearchingPage();
+                }
                 if (currentIndex == 2) {
                   screens[currentIndex] = SettingsPage();
                 }
