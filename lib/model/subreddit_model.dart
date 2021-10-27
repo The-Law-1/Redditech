@@ -48,46 +48,9 @@ class SubredditFeed {
       await setMyInfo();
     }
 
-    List<SubredditModel> subredditList = [];
-
-    String postsList = await SearchController.GetSubreddits(query);
-    String iconImg = "";
-
-    print("QUERY: " + query);
-    if (postsList == "") {
-      return false;
-    }
-    var jsonPosts = jsonDecode(postsList);
-    var data = jsonPosts['data'];
-    List actualPosts = data['children'];
-    //var firstPost = actualPosts[0]["data"];
-
-    for (var i = 0; i < actualPosts.length; i++) {
-      var postData = actualPosts[i]['data'];
-
-      String? headerUrl = postData['header_img'];
-
-      // if null, assign to ""
-      headerUrl ??= "";
-
-      if (postData['icon_img'] == null) {
-        iconImg = "";
-      } else {
-        iconImg = postData['icon_img'];
-      }
-      int? subs = postData['subscribers'];
-
-      subs ??= 0;
-
-      bool joined = false;
-      if (connected) {
-        joined = mySubsContainsName(postData['display_name']);
-      }
-
-      SubredditModel newSubreddit = SubredditModel(postData['display_name'],
-          iconImg, postData['public_description'], subs, headerUrl,
-          isJoined: joined);
-      subredditList.add(newSubreddit);
+    List<SubredditModel> subredditList = await SubredditController.SearchSubreddits(subreddits, query);
+    if (subredditList.isEmpty) {
+      return (false);
     }
     // needs copy ?
     subreddits = subredditList;
