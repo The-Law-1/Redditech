@@ -43,7 +43,7 @@ Widget subredditRow(String profileImgUrl, String title,
       title,
       style: const TextStyle(
         fontWeight: FontWeight.bold,
-        fontSize: 16,
+        fontSize: 12,
       ),
     ),
   ];
@@ -131,6 +131,18 @@ List<Widget> buildPostFeedContainer(
   return ([
     subredditRow(profileImageUrl, author),
     Text(postHeader,
-        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 32))
+        style: const TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 22,
+        )
+    )
   ]);
+  /*return ([ListTile(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+    contentPadding: const EdgeInsets.all(8.0),
+      tileColor: Colors.grey[200],
+    leading: subredditRow(profileImageUrl, author),
+    title: Text(postHeader,
+        style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 22))
+  )]);*/
 }
