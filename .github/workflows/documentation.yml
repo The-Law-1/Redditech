@@ -17,15 +17,12 @@ jobs:
         with:
           java-version: '12.x'
 
-      - name: Setup Flutter
+      - name: Setup Flutter + build doc
         uses: subosito/flutter-action@v1
         with:
           flutter-version: '2.5.2'
-      - run: flutter pub get
-
-      - name: Build documentation
-        uses: actions/checkout@v2
       - run: flutter pub global activate dartdoc
+      - run: flutter pub get
       - run: flutter pub run dartdoc
 
       - name: Push documentation
