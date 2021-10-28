@@ -5,6 +5,7 @@
 <a href="https://github.com/The-Law-1/B-DEV-501-NAN-5-1-redditech-gabriel.griffin/actions/workflows/build.yml"><img src="https://github.com/The-Law-1/B-DEV-501-NAN-5-1-redditech-gabriel.griffin/actions/workflows/build.yml/badge.svg" alt="APK build"></a>
 <a href="https://github.com/The-Law-1/B-DEV-501-NAN-5-1-redditech-gabriel.griffin/actions/workflows/documentation.yml"><img src="https://github.com/The-Law-1/B-DEV-501-NAN-5-1-redditech-gabriel.griffin/actions/workflows/documentation.yml/badge.svg" alt="Documentation"></a>
 <a href="https://github.com/The-Law-1/B-DEV-501-NAN-5-1-redditech-gabriel.griffin/actions/workflows/mirror.yml"><img src="https://github.com/The-Law-1/B-DEV-501-NAN-5-1-redditech-gabriel.griffin/actions/workflows/mirror.yml/badge.svg" alt="Epitech mirror"></a>
+<a href="https://github.com/The-Law-1/B-DEV-501-NAN-5-1-redditech-gabriel.griffin/actions/workflows/test.yml"><img src="https://github.com/The-Law-1/B-DEV-501-NAN-5-1-redditech-gabriel.griffin/actions/workflows/test.yml/badge.svg" alt="Epitech test"></a>
 </p>
 
 A small Flutter app emulating Reddit's basic functionalities. 
