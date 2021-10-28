@@ -18,6 +18,8 @@ class PostController {
 
     var jsonPosts = jsonDecode(rawPosts);
 
+    if (jsonPosts == null || jsonPosts["data"] == null) return ([]);
+
     List posts = jsonPosts["data"]["children"];
 
     for (var i = 0; i < posts.length; i++) {
