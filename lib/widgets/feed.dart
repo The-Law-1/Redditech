@@ -106,7 +106,12 @@ Widget buildPostFeedContainerFromPost(Post post) {
       post.thumbnail != "self" &&
       post.thumbnail != "default" &&
       post.thumbnail != "spoiler") {
-    postElements.add(Image.network(post.thumbnail));
+    postElements.add(Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Image.network(post.thumbnail, scale: 0.5),
+      ],
+    ));
   }
   // for (var imageUrl in post.previewImages) {
   //   try {
@@ -134,8 +139,7 @@ List<Widget> buildPostFeedContainer(
         style: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 22,
-        )
-    )
+        ))
   ]);
   /*return ([ListTile(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
