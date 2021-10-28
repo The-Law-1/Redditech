@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> /* with RedditInfo*/ {
         separatorBuilder: (context, index) {
           return Divider(
             color: Colors.red[200],
-            thickness: 1,
+            thickness: 2,
             indent: 100,
             endIndent: 100,
           );
