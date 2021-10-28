@@ -100,7 +100,15 @@ Widget buildPostFeedContainerFromPost(Post post) {
   List<Widget> postElements = buildPostFeedContainer(
       post.subredditImgUrl, post.authorName, post.postHeader);
 
-  postElements.add(Text(post.textContent));
+  postElements.add(Padding(
+    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+    child: Text(
+      post.textContent,
+      style: const TextStyle(
+        fontSize: 15,
+      )
+    ),
+  ));
 
   if (post.thumbnail != "" &&
       post.thumbnail != "self" &&
@@ -135,11 +143,14 @@ List<Widget> buildPostFeedContainer(
     String profileImageUrl, String author, String postHeader) {
   return ([
     subredditRow(profileImageUrl, author),
-    Text(postHeader,
-        style: const TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 22,
-        ))
+    Padding(
+      padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+      child: Text(postHeader,
+          style: const TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+          )),
+    )
   ]);
   /*return ([ListTile(
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
