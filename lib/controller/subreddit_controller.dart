@@ -12,7 +12,8 @@ class SubredditController {
     return (subreddits);
   }
 
-  static bool subredditsContainsName(List<SubredditModel> subsList, String subName) {
+  static bool subredditsContainsName(
+      List<SubredditModel> subsList, String subName) {
     for (var i = 0; i < subsList.length; i++) {
       if (subsList[i].subredditName == subName) {
         print("You are subscribed to " + subName);
@@ -22,9 +23,8 @@ class SubredditController {
     return (false);
   }
 
-
-  static Future<List<SubredditModel>> SearchSubreddits(List<SubredditModel> joinedSubs, String query) async
-  {
+  static Future<List<SubredditModel>> SearchSubreddits(
+      List<SubredditModel> joinedSubs, String query) async {
     String postsList = await SearchController.GetSubreddits(query);
     String iconImg = "";
 
