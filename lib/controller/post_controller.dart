@@ -14,6 +14,8 @@ class PostController {
   }
 
   static List refinePostData(String rawPosts) {
+    if (rawPosts == "") return ([]);
+
     var jsonPosts = jsonDecode(rawPosts);
 
     List posts = jsonPosts["data"]["children"];

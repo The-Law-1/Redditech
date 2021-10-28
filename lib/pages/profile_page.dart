@@ -81,8 +81,9 @@ class _ProfilePageState extends State<ProfilePage> {
       updateSubredditList();
     } else {
       print("Connect yo self");
-      if (finalProfileElements.isEmpty)
+      if (finalProfileElements.isEmpty) {
         finalProfileElements.add(connectButton());
+      }
     }
   }
 

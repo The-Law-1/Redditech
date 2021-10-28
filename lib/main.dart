@@ -74,6 +74,7 @@ class _MyHomePageState extends State<MyHomePage> {
               setState(() {
                 currentIndex = index;
                 if (currentIndex == 1) {
+                  print("Change page to search");
                   screens[currentIndex] = SearchingPage();
                 }
                 if (currentIndex == 2) {
