@@ -34,11 +34,14 @@ class SubredditFeed {
   Future<bool> setInfo(String query) async {
     bool connected = await RedditInfo.isConnected();
 
+    subreddits = [];
+
     if (connected) {
       await setMyInfo();
     }
 
-    List<SubredditModel> subredditList = await SubredditController.SearchSubreddits(subreddits, query);
+    List<SubredditModel> subredditList =
+        await SubredditController.SearchSubreddits(subreddits, query);
     if (subredditList.isEmpty) {
       return (false);
     }
@@ -56,7 +59,8 @@ class SubredditFeed {
     return (postWidgets);
   }
 
-  Future<List<SubredditModel>> getSubredditsFromStream(Stream<Subreddit> subStream) async {
+  Future<List<SubredditModel>> getSubredditsFromStream(
+      Stream<Subreddit> subStream) async {
     subreddits = [];
 
     await for (final value in subStream) {

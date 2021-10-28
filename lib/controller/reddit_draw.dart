@@ -25,9 +25,7 @@ class RedditInfo {
     redirectUri: Uri.parse("tol://localhost"),
   );
 
-  static void sayHi() {
-
-  }
+  static void sayHi() {}
 
   static Future<String> _connectToReddit(red) async {
     final authUrl = red.auth.url(["*"], "Appdev", compactLogin: true);
@@ -51,7 +49,6 @@ class RedditInfo {
     } catch (e) {
       return (false);
     }
-
   }
 
   static Future<bool> connection() async {
