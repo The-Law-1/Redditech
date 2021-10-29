@@ -17,9 +17,11 @@ class Post {
   late String postHeader = "";
   late List<String> previewImages = [];
   late String textContent = "";
+  late int ups = 0;
+  late int awards = 0;
 
   Post(this.subredditName, this.authorName, this.thumbnail, this.postHeader,
-      this.previewImages, this.textContent) {
+      this.previewImages, this.textContent, this.ups, this.awards) {
     // do operations on preview images to only get the jpeg
 
     for (var i = 0; i < previewImages.length; i++) {
@@ -61,8 +63,10 @@ class PostFeed {
           postData['thumbnail'],
           postData['title'],
           postData["preview_images"],
-          postData['selftext']);
-
+          postData['selftext'],
+          postData['ups'],
+          postData['total_awards_received']
+      );
       posts.add(newPost);
     }
     return (true);

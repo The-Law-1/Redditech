@@ -102,12 +102,10 @@ Widget buildPostFeedContainerFromPost(Post post) {
 
   postElements.add(Padding(
     padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-    child: Text(
-      post.textContent,
-      style: const TextStyle(
-        fontSize: 15,
-      )
-    ),
+    child: Text(post.textContent,
+        style: const TextStyle(
+          fontSize: 15,
+        )),
   ));
 
   if (post.thumbnail != "" &&
@@ -121,6 +119,19 @@ Widget buildPostFeedContainerFromPost(Post post) {
       ],
     ));
   }
+
+  postElements.add(Padding(
+    padding: const EdgeInsets.fromLTRB(5.0, 5.0, 0, 5.0),
+    child: Row(
+      children: <Widget> [
+        const Icon(Icons.arrow_upward_rounded),
+        Text(post.ups.toString(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+        const Text("   "),
+        const Icon(Icons.emoji_events_rounded),
+        Text(post.awards.toString(), style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold)),
+      ],
+    ),
+  ));
   // for (var imageUrl in post.previewImages) {
   //   try {
   //     postElements.add(Image.network(imageUrl));
