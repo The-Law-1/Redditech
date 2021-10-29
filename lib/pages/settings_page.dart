@@ -68,6 +68,9 @@ class _SettingsPageState extends State<SettingsPage> {
       }
     } else {
       print("Connect yo self");
+      if (settingsElements.isEmpty) {
+        settingsElements.add(settingsText());
+      }
     }
   }
   // ! how do we change the settings ?
@@ -102,6 +105,20 @@ class _SettingsPageState extends State<SettingsPage> {
     )));
     /*(padding: const EdgeInsets.only(top: 100),
       children: settingsElements,*/
+  }
+
+  Widget settingsText() {
+    return const Padding(
+      padding: EdgeInsets.fromLTRB(12, 40, 12, 0),
+      child: Text(
+        "You must login to access your settings",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 30,
+          color: Colors.red
+        ),
+      ),
+    );
   }
 
   Widget simpleButton(result, value, text, icon) {
