@@ -22,7 +22,7 @@ jobs:
         with:
           flutter-version: '2.5.2'
       - run: flutter pub get
-      - run: flutter build apk
+      - run: flutter build apk --dart-define=REDDIT_USER_AGENT=${{ secrets.REDDIT_USER_AGENT }} --dart-define=REDDIT_CLIENT_ID=${{ secrets.REDDIT_CLIENT_ID }} --dart-define=REDDIT_REDIRECT_URI=${{ secrets.REDDIT_REDIRECT_URI }}
 
       - name: create artifact
         run: mkdir artifact && cp build/app/outputs/flutter-apk/app-release.apk artifact

@@ -20,9 +20,9 @@ class RedditInfo {
 
   // ! should the clientID be a secret ??
   static var red = Reddit.createInstalledFlowInstance(
-    clientId: "MMGIkAwcebtbAJ4IOEGV4A",
-    userAgent: "Appdev",
-    redirectUri: Uri.parse("tol://localhost"),
+    clientId: const String.fromEnvironment("REDDIT_CLIENT_ID"),
+    userAgent: const String.fromEnvironment("REDDIT_USER_AGENT"),
+    redirectUri: Uri.parse(const String.fromEnvironment("REDDIT_REDIRECT_URI")),
   );
 
   static void sayHi() {}
