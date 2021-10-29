@@ -57,7 +57,6 @@ class PostFeed {
 
       var postData = post["data"];
 
-      print(postData.toString());
       Post newPost = Post(
           postData['subreddit'],
           postData["author"],
