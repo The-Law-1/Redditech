@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="generator" content="made with love by dartdoc 4.1.0">
+  <meta name="description" content="redditech API docs, for the Dart programming language.">
+  <title>redditech - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href=""
+      data-using-base-href="false">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <button id="sidenav-left-toggle" type="button">&nbsp;</button>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li class="self-crumb">redditech package</li>
+  </ol>
+  <div class="self-name">redditech</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<main>
+
+
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="redditech">Redditech</h1><p align="center">
+<a href="https://github.com/The-Law-1/B-DEV-501-NAN-5-1-redditech-gabriel.griffin/actions/workflows/build.yml"><img src="https://github.com/The-Law-1/B-DEV-501-NAN-5-1-redditech-gabriel.griffin/actions/workflows/build.yml/badge.svg" alt="APK build"></a>
+<a href="https://github.com/The-Law-1/B-DEV-501-NAN-5-1-redditech-gabriel.griffin/actions/workflows/documentation.yml"><img src="https://github.com/The-Law-1/B-DEV-501-NAN-5-1-redditech-gabriel.griffin/actions/workflows/documentation.yml/badge.svg" alt="Documentation"></a>
+<a href="https://github.com/The-Law-1/B-DEV-501-NAN-5-1-redditech-gabriel.griffin/actions/workflows/mirror.yml"><img src="https://github.com/The-Law-1/B-DEV-501-NAN-5-1-redditech-gabriel.griffin/actions/workflows/mirror.yml/badge.svg" alt="Epitech mirror"></a>
+</p>
+<p>A small Flutter app emulating Reddit's basic functionalities.</p>
+<p>This readme will serve as a functional documentation.</p>
+<h2 id="home-page">Home page</h2>
+<p><img src="https://user-images.githubusercontent.com/62939585/139080611-1e097155-c234-43ef-ad09-a52dafc8e539.png" alt="HomePage"></p>
+<p>The default Home page. This page shows the 25 first posts on the Reddit homepage (can be filtered by New, Hot, and Best).</p>
+<h2 id="filter-wheel">Filter wheel</h2>
+<p><img src="https://user-images.githubusercontent.com/62939585/139081639-2d1e5e02-7b11-46b9-80ac-3e2ba640e5e7.png" alt="filter wheel"></p>
+<p>This floating button can be found on the home page, and on the subreddit page.
+Click on the fire icon to filter the posts by "Hot", the heart icon to filter by "Best", and the lightning icon to filter by "New".</p>
+<h2 id="search-page">Search page</h2>
+<p><img src="https://user-images.githubusercontent.com/62939585/139081664-f69b61eb-ae97-41b0-b694-46325279db48.png" alt="search page"></p>
+<p>Click and type your query into the search bar, and the app will show a list of corresponding subreddits.
+The user can then click on one of the rows to expand the subreddit and show the page containing the corresponding details and posts.
+If the user is connected and is subscribed to one of the subreddits, a heart will show on the row. It can be clicked to unsubscribe from the subreddit.</p>
+<p><img src="https://user-images.githubusercontent.com/62939585/139082766-272cf7aa-1fe8-4c6c-a384-a5763488f2c9.png" alt="hearted sub"></p>
+<h2 id="subreddit-page">Subreddit page</h2>
+<p><img src="https://user-images.githubusercontent.com/62939585/139081737-ed11e86a-82ee-472c-a928-6626b6d4532f.png" alt="subredditPage"></p>
+<p>This page is shown if you click on a subreddit from the search or profile page. It shows the subreddit's banner, picture, title, description, and subscribers. The heart icon is click-able to subscribe/unsubscribe from the subreddit.
+Below, you will find a list of the subreddit's latest posts. The filter wheel can be used to filter the posts.</p>
+<h2 id="settings-page">Settings page</h2>
+<p><img src="https://user-images.githubusercontent.com/62939585/139081691-6203e572-b9df-4628-bce2-62828d6db2e1.png" alt="settingsPage"></p>
+<p>If the user is connected, the settings page will show 6 toggle widgets. The user can modify their settings from this page.</p>
+<h2 id="profile-page">Profile page</h2>
+<p>If the user is not connected, and tries to access the profile page, they will be prompted to connect their account.
+<img src="https://user-images.githubusercontent.com/62939585/139083623-b2b1ad84-d937-4cbc-8669-8ba10cb9ffb2.png" alt="not connected"></p>
+<p>Once the user is connected, the profile page will show their profile picture, banner, username, and description.
+Below, the user can browse the subreddits they are subscribed to, and expand them.
+If the heart icon is clicked, the user will be unsubscribed from the corresponding subreddit and it will disappear from the list.</p>
+<p><img src="https://user-images.githubusercontent.com/62939585/139081713-9945cbbc-85c6-453d-b706-f7c4339e80a2.png" alt="ProfilePage"></p>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="buttons">
+  <span class="name"><a href="widgets_buttons/widgets_buttons-library.html">buttons</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="feed">
+  <span class="name"><a href="widgets_feed/widgets_feed-library.html">feed</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="home_page">
+  <span class="name"><a href="pages_home_page/pages_home_page-library.html">home_page</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="login_page">
+  <span class="name"><a href="pages_login_page/pages_login_page-library.html">login_page</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="main">
+  <span class="name"><a href="main/main-library.html">main</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="post_controller">
+  <span class="name"><a href="controller_post_controller/controller_post_controller-library.html">post_controller</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="post_model">
+  <span class="name"><a href="model_post_model/model_post_model-library.html">post_model</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="post_page">
+  <span class="name"><a href="pages_post_page/pages_post_page-library.html">post_page</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="profile_controller">
+  <span class="name"><a href="controller_profile_controller/controller_profile_controller-library.html">profile_controller</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="profile_model">
+  <span class="name"><a href="model_profile_model/model_profile_model-library.html">profile_model</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="profile_page">
+  <span class="name"><a href="pages_profile_page/pages_profile_page-library.html">profile_page</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="reddit_draw">
+  <span class="name"><a href="controller_reddit_draw/controller_reddit_draw-library.html">reddit_draw</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="reddit_wrapper">
+  <span class="name"><a href="controller_reddit_wrapper/controller_reddit_wrapper-library.html">reddit_wrapper</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="search_controller">
+  <span class="name"><a href="controller_search_controller/controller_search_controller-library.html">search_controller</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="searching_page">
+  <span class="name"><a href="pages_searching_page/pages_searching_page-library.html">searching_page</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="settings_page">
+  <span class="name"><a href="pages_settings_page/pages_settings_page-library.html">settings_page</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="subreddit_controller">
+  <span class="name"><a href="controller_subreddit_controller/controller_subreddit_controller-library.html">subreddit_controller</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="subreddit_model">
+  <span class="name"><a href="model_subreddit_model/model_subreddit_model-library.html">subreddit_model</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+          <dt id="subreddit_page">
+  <span class="name"><a href="pages_subreddit_page/pages_subreddit_page-library.html">subreddit_page</a></span> 
+
+</dt>
+<dd> 
+</dd>
+
+        </dl>
+      </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+  <li class="self-crumb">redditech package</li>
+</ol>
+
+
+    <h5 class="hidden-xs"><span class="package-name">redditech</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="widgets_buttons/widgets_buttons-library.html">buttons</a></li>
+      <li><a href="widgets_feed/widgets_feed-library.html">feed</a></li>
+      <li><a href="pages_home_page/pages_home_page-library.html">home_page</a></li>
+      <li><a href="pages_login_page/pages_login_page-library.html">login_page</a></li>
+      <li><a href="main/main-library.html">main</a></li>
+      <li><a href="controller_post_controller/controller_post_controller-library.html">post_controller</a></li>
+      <li><a href="model_post_model/model_post_model-library.html">post_model</a></li>
+      <li><a href="pages_post_page/pages_post_page-library.html">post_page</a></li>
+      <li><a href="controller_profile_controller/controller_profile_controller-library.html">profile_controller</a></li>
+      <li><a href="model_profile_model/model_profile_model-library.html">profile_model</a></li>
+      <li><a href="pages_profile_page/pages_profile_page-library.html">profile_page</a></li>
+      <li><a href="controller_reddit_draw/controller_reddit_draw-library.html">reddit_draw</a></li>
+      <li><a href="controller_reddit_wrapper/controller_reddit_wrapper-library.html">reddit_wrapper</a></li>
+      <li><a href="controller_search_controller/controller_search_controller-library.html">search_controller</a></li>
+      <li><a href="pages_searching_page/pages_searching_page-library.html">searching_page</a></li>
+      <li><a href="pages_settings_page/pages_settings_page-library.html">settings_page</a></li>
+      <li><a href="controller_subreddit_controller/controller_subreddit_controller-library.html">subreddit_controller</a></li>
+      <li><a href="model_subreddit_model/model_subreddit_model-library.html">subreddit_model</a></li>
+      <li><a href="pages_subreddit_page/pages_subreddit_page-library.html">subreddit_page</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    redditech
+      1.0.0+1
+  </span>
+
+  
+</footer>
+
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/script.js?v1"></script>
+
+
+
+</body>
+
+</html>
+
