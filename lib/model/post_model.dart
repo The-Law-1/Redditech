@@ -59,14 +59,13 @@ class PostFeed {
 
       Post newPost = Post(
           postData['subreddit'],
-          postData["author_fullname"],
+          postData["author"],
           postData['thumbnail'],
           postData['title'],
           postData["preview_images"],
           postData['selftext'],
           postData['ups'],
-          postData['total_awards_received']
-      );
+          postData['total_awards_received']);
       posts.add(newPost);
     }
     return (true);
