@@ -90,7 +90,21 @@ class _SubredditPageState extends State<SubredditPage> {
           // the App.build method, and use it to set our appbar title.
           //title: const Text(''),
           ),
-      body: ListView(padding: EdgeInsets.zero, children: finalElements),
+      body: ListView.separated(
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, 10.0),
+        itemCount: finalElements.length,
+        itemBuilder: (context, index) {
+          return finalElements[index];
+        },
+        separatorBuilder: (context, index) {
+          return const Divider(
+            color: Colors.red,
+            thickness: 2,
+            indent: 100,
+            endIndent: 100,
+        );
+      },
+      ),
       floatingActionButton: filterCircularMenu(),
     ));
   }
